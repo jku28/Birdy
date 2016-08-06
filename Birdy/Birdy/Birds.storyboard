@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V8t-jb-ntL">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Bird Quiz View Controller-->
+        <scene sceneID="YHE-4N-kht">
+            <objects>
+                <viewController id="RLe-Iq-9uT" customClass="BirdQuizViewController" customModule="Birdy" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xbi-V0-1JS"/>
+                        <viewControllerLayoutGuide type="bottom" id="RFP-4C-3nk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ywg-HN-bTZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Rc-jb-DKI">
+                                <rect key="frame" x="20" y="84" width="560" height="200"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="em6-xs-hXc"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbS-Bb-s0A" customClass="CustomView" customModule="Birdy" customModuleProvider="target">
+                                <rect key="frame" x="20" y="336" width="60" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwa-wQ-PeB">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <state key="normal" title="decline"/>
+                                        <connections>
+                                            <action selector="onDecline:" destination="RLe-Iq-9uT" eventType="touchUpInside" id="9fc-vf-9y4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="9Jh-z9-yWK"/>
+                                    <constraint firstAttribute="bottom" secondItem="pwa-wQ-PeB" secondAttribute="bottom" id="G2F-XD-LzN"/>
+                                    <constraint firstAttribute="width" constant="60" id="ZIC-Pi-6IT"/>
+                                    <constraint firstItem="pwa-wQ-PeB" firstAttribute="top" secondItem="lbS-Bb-s0A" secondAttribute="top" id="nuE-wa-6Zq"/>
+                                    <constraint firstItem="pwa-wQ-PeB" firstAttribute="leading" secondItem="lbS-Bb-s0A" secondAttribute="leading" id="ptg-dq-6vA"/>
+                                    <constraint firstAttribute="trailing" secondItem="pwa-wQ-PeB" secondAttribute="trailing" id="zh4-Fa-u6Y"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uo5-L5-A9o" customClass="CustomView" customModule="Birdy" customModuleProvider="target">
+                                <rect key="frame" x="520" y="336" width="60" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9s-Hs-eu6">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <state key="normal" title="accept"/>
+                                        <connections>
+                                            <action selector="onAccept:" destination="RLe-Iq-9uT" eventType="touchUpInside" id="rpI-Zh-bHa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="w9s-Hs-eu6" firstAttribute="top" secondItem="uo5-L5-A9o" secondAttribute="top" id="IKJ-Dq-r6f"/>
+                                    <constraint firstItem="w9s-Hs-eu6" firstAttribute="leading" secondItem="uo5-L5-A9o" secondAttribute="leading" id="PZ3-MX-FhZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="w9s-Hs-eu6" secondAttribute="trailing" id="RzW-Gy-ye7"/>
+                                    <constraint firstAttribute="bottom" secondItem="w9s-Hs-eu6" secondAttribute="bottom" id="e5I-Pd-Jz7"/>
+                                    <constraint firstAttribute="height" constant="60" id="fFY-1d-PO5"/>
+                                    <constraint firstAttribute="width" constant="60" id="zAk-Wi-oZ0"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pIM-9o-2ZA">
+                                <rect key="frame" x="103" y="308" width="393" height="115"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="115" id="1XM-Ip-tqS"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="RLe-Iq-9uT" id="wc0-gh-ycs"/>
+                                    <outlet property="delegate" destination="RLe-Iq-9uT" id="edb-JG-ZAV"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9Rc-jb-DKI" secondAttribute="trailing" constant="20" id="9NO-z8-o5l"/>
+                            <constraint firstItem="uo5-L5-A9o" firstAttribute="centerY" secondItem="pIM-9o-2ZA" secondAttribute="centerY" id="PHy-GM-lf5"/>
+                            <constraint firstItem="pIM-9o-2ZA" firstAttribute="leading" secondItem="lbS-Bb-s0A" secondAttribute="trailing" constant="23" id="SBR-se-xPP"/>
+                            <constraint firstItem="lbS-Bb-s0A" firstAttribute="leading" secondItem="ywg-HN-bTZ" secondAttribute="leading" constant="20" id="WB1-El-dgv"/>
+                            <constraint firstItem="lbS-Bb-s0A" firstAttribute="centerY" secondItem="pIM-9o-2ZA" secondAttribute="centerY" id="Y4I-JR-3qM"/>
+                            <constraint firstAttribute="trailing" secondItem="uo5-L5-A9o" secondAttribute="trailing" constant="20" id="cLo-Nq-BTR"/>
+                            <constraint firstItem="uo5-L5-A9o" firstAttribute="leading" secondItem="pIM-9o-2ZA" secondAttribute="trailing" constant="24" id="dJV-ug-I8c"/>
+                            <constraint firstItem="pIM-9o-2ZA" firstAttribute="top" secondItem="9Rc-jb-DKI" secondAttribute="bottom" constant="24" id="pWA-sh-26A"/>
+                            <constraint firstItem="9Rc-jb-DKI" firstAttribute="leading" secondItem="ywg-HN-bTZ" secondAttribute="leading" constant="20" id="q3W-sH-8NM"/>
+                            <constraint firstItem="9Rc-jb-DKI" firstAttribute="top" secondItem="Xbi-V0-1JS" secondAttribute="bottom" constant="20" id="qVe-zV-Yox"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="2Lt-sW-jcv"/>
+                    <connections>
+                        <outlet property="birdIV" destination="9Rc-jb-DKI" id="B4w-VL-yFP"/>
+                        <outlet property="namePicker" destination="pIM-9o-2ZA" id="ssH-wE-pom"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dis-wS-N7D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1162" y="453"/>
+        </scene>
+        <!--Birds-->
+        <scene sceneID="FUb-i3-GRe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="V8t-jb-ntL" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Birds" id="C8N-Kt-4wv"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KN2-ya-rIw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="RLe-Iq-9uT" kind="relationship" relationship="rootViewController" id="11D-Up-1rz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q7x-tD-UsR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="350" y="453"/>
+        </scene>
+    </scenes>
+</document>
