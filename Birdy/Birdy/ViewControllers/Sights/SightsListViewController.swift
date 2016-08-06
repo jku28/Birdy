@@ -16,7 +16,7 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     //MARK: - vars
 
-    private var presentingSights = []
+    private var presentingSights:[Bird] = []
 
     //MARK: - funcs
 
@@ -25,6 +25,15 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
 
         // Do any additional setup after loading the view.
         navigationItem.title = "Sightings"
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        self.startAnimateWait()
+        ServiceManager.getAllBirds {[weak self] (birds, error) in
+            self?.presentingSights = birds
+            self?.tableView.reloadData()
+            self?.stopAnimateWait()
+        }
     }
 
     private func loadSights() {
@@ -38,8 +47,14 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-
+        var cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        }
+        let bird = presentingSights[indexPath.row]
+        cell!.textLabel?.text = bird.commonname
+        cell!.detailTextLabel?.text = bird.weather
+        cell!.selectionStyle = .None
         return cell!
     }
 
