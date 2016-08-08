@@ -46,8 +46,8 @@ class SignInViewController: UIViewController {
             self?.stopAnimateWait()
             if success {
                 StoryboardManager.initiateStoryboard("Main")
-            } else {
-                AppUtils.showAlert(owner: self, title: nil, message: "Please check credentials and try again later", actions: nil)
+            } else if let err = error {
+                AppUtils.showAlert(owner: self!, title: nil, message: err.localizedDescription, actions: nil)
             }
         }
     }

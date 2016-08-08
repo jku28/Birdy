@@ -39,10 +39,11 @@ class ServiceManager: NSObject {
     }
 
     class func getRandomBird(callback:((bird:Bird?,error:NSError?)->())?) {
-        let urlString = "\(baseUrl)/birds/randomBird"
+        let urlString = "\(baseUrl)/birds/randombird"
 
         LoadRequest(urlString, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("rnd brd \(str)")
             }) { (error) in
                 print("error \(error)")
                 if callback != nil { callback!(bird: nil,error: error)}
@@ -52,9 +53,21 @@ class ServiceManager: NSObject {
     class func login(login:String, password:String,callback:((success:Bool,error:NSError?)->())?) {
         let urlString = "\(baseUrl)/users/login/\(login)/\(password)"
         LoadRequest(urlString, success: { (data) in
-            let str = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String
-            let result = stringToBool(str)
-            if callback != nil { callback!(success:result,error:nil)}
+            if let str = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
+                if str.containsString("403") {
+                    if callback != nil { callback!(success:false,error:NSError(domain: "in-app", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Forbidden (403)"]))}
+                } else if str.containsString("502") {
+                    if callback != nil { callback!(success:false,error:NSError(domain: "in-app", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Bad gateway (502)"]))}
+                }
+                let result = stringToBool(str)
+                if result {
+                    if callback != nil { callback!(success:result,error:nil)}
+                } else {
+                    if callback != nil { callback!(success:false,error:NSError(domain: "server", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Please check credentials"]))}
+                }
+            } else {
+                if callback != nil { callback!(success:false,error:nil)}
+            }
             }) { (error) in
                 if callback != nil { callback!(success:false,error:error)}
         }
