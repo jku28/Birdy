@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A2CDEDD1D59041A001399DA /* Birds.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A2CDEDB1D59041A001399DA /* Birds.storyboard */; };
+		7A2CDEDE1D59041A001399DA /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A2CDEDC1D59041A001399DA /* Settings.storyboard */; };
+		7A2CDEE01D590436001399DA /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2CDEDF1D590436001399DA /* AppUtils.swift */; };
 		7A813F901D56708C0008F6CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813F8F1D56708C0008F6CE /* AppDelegate.swift */; };
-		7A813F921D56708C0008F6CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813F911D56708C0008F6CE /* ViewController.swift */; };
 		7A813F9A1D56708C0008F6CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A813F981D56708C0008F6CE /* LaunchScreen.storyboard */; };
 		7A813FA61D5672610008F6CE /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A813FA51D5672610008F6CE /* Auth.storyboard */; };
 		7A813FA81D56727A0008F6CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A813FA71D56727A0008F6CE /* Main.storyboard */; };
 		7A813FAA1D5672D10008F6CE /* Sights.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A813FA91D5672D10008F6CE /* Sights.storyboard */; };
 		7A813FAD1D5672E70008F6CE /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A813FAC1D5672E70008F6CE /* Search.storyboard */; };
-		7A813FAF1D5672F20008F6CE /* Birds.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A813FAE1D5672F20008F6CE /* Birds.storyboard */; };
-		7A813FB11D5673050008F6CE /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A813FB01D5673050008F6CE /* Settings.storyboard */; };
 		7A813FB71D56737C0008F6CE /* NSDate+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813FB31D56737C0008F6CE /* NSDate+format.swift */; };
 		7A813FB81D56737C0008F6CE /* StoryboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813FB41D56737C0008F6CE /* StoryboardManager.swift */; };
 		7A813FB91D56737C0008F6CE /* UIViewController+keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813FB51D56737C0008F6CE /* UIViewController+keyboard.swift */; };
@@ -31,17 +31,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A2CDEDB1D59041A001399DA /* Birds.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Birds.storyboard; path = Storyboards/Birds.storyboard; sourceTree = "<group>"; };
+		7A2CDEDC1D59041A001399DA /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Settings.storyboard; path = Storyboards/Settings.storyboard; sourceTree = "<group>"; };
+		7A2CDEDF1D590436001399DA /* AppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppUtils.swift; path = Core/AppUtils.swift; sourceTree = "<group>"; };
 		7A813F8C1D56708C0008F6CE /* Birdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Birdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A813F8F1D56708C0008F6CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7A813F911D56708C0008F6CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7A813F991D56708C0008F6CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A813F9B1D56708C0008F6CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A813FA51D5672610008F6CE /* Auth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Auth.storyboard; path = Storyboards/Auth.storyboard; sourceTree = "<group>"; };
 		7A813FA71D56727A0008F6CE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Storyboards/Main.storyboard; sourceTree = "<group>"; };
 		7A813FA91D5672D10008F6CE /* Sights.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Sights.storyboard; path = Storyboards/Sights.storyboard; sourceTree = "<group>"; };
 		7A813FAC1D5672E70008F6CE /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Search.storyboard; path = Storyboards/Search.storyboard; sourceTree = "<group>"; };
-		7A813FAE1D5672F20008F6CE /* Birds.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Birds.storyboard; sourceTree = "<group>"; };
-		7A813FB01D5673050008F6CE /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		7A813FB31D56737C0008F6CE /* NSDate+format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+format.swift"; path = "Core/NSDate+format.swift"; sourceTree = "<group>"; };
 		7A813FB41D56737C0008F6CE /* StoryboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoryboardManager.swift; path = Core/StoryboardManager.swift; sourceTree = "<group>"; };
 		7A813FB51D56737C0008F6CE /* UIViewController+keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+keyboard.swift"; path = "Core/UIViewController+keyboard.swift"; sourceTree = "<group>"; };
@@ -88,7 +88,6 @@
 			children = (
 				7A813FA11D5670990008F6CE /* Classes */,
 				7A813F8F1D56708C0008F6CE /* AppDelegate.swift */,
-				7A813F911D56708C0008F6CE /* ViewController.swift */,
 				7ACB374D1D56958100D1A45E /* Assets.xcassets */,
 				7A813F981D56708C0008F6CE /* LaunchScreen.storyboard */,
 				7A813F9B1D56708C0008F6CE /* Info.plist */,
@@ -100,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				7A813FB21D56730C0008F6CE /* Core */,
+				7A813FCB1D568C6E0008F6CE /* Extensions */,
 				7A813FA21D5672170008F6CE /* Storyboards */,
 				7A813FA31D5672250008F6CE /* ViewControllers */,
 				7A813FA41D56722F0008F6CE /* Views */,
@@ -113,9 +113,9 @@
 				7A813FA51D5672610008F6CE /* Auth.storyboard */,
 				7A813FA71D56727A0008F6CE /* Main.storyboard */,
 				7A813FA91D5672D10008F6CE /* Sights.storyboard */,
-				7A813FAE1D5672F20008F6CE /* Birds.storyboard */,
+				7A2CDEDB1D59041A001399DA /* Birds.storyboard */,
 				7A813FAC1D5672E70008F6CE /* Search.storyboard */,
-				7A813FB01D5673050008F6CE /* Settings.storyboard */,
+				7A2CDEDC1D59041A001399DA /* Settings.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -142,8 +142,8 @@
 		7A813FB21D56730C0008F6CE /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				7A2CDEDF1D590436001399DA /* AppUtils.swift */,
 				7A813FB41D56737C0008F6CE /* StoryboardManager.swift */,
-				7A813FCB1D568C6E0008F6CE /* Extensions */,
 				7A813FCC1D568C9B0008F6CE /* ServiceManager.swift */,
 			);
 			name = Core;
@@ -252,12 +252,12 @@
 			files = (
 				7A813FAA1D5672D10008F6CE /* Sights.storyboard in Resources */,
 				7A813FA61D5672610008F6CE /* Auth.storyboard in Resources */,
+				7A2CDEDD1D59041A001399DA /* Birds.storyboard in Resources */,
 				7A813FA81D56727A0008F6CE /* Main.storyboard in Resources */,
-				7A813FAF1D5672F20008F6CE /* Birds.storyboard in Resources */,
 				7A813F9A1D56708C0008F6CE /* LaunchScreen.storyboard in Resources */,
 				7A813FAD1D5672E70008F6CE /* Search.storyboard in Resources */,
 				7ACB374E1D56958100D1A45E /* Assets.xcassets in Resources */,
-				7A813FB11D5673050008F6CE /* Settings.storyboard in Resources */,
+				7A2CDEDE1D59041A001399DA /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,12 +271,12 @@
 				7A813FC21D567C870008F6CE /* SightsListViewController.swift in Sources */,
 				7A813FBD1D5678190008F6CE /* SignInViewController.swift in Sources */,
 				7A813FC51D567F600008F6CE /* BirdQuizViewController.swift in Sources */,
+				7A2CDEE01D590436001399DA /* AppUtils.swift in Sources */,
 				7A813FB91D56737C0008F6CE /* UIViewController+keyboard.swift in Sources */,
 				7A813FCD1D568C9B0008F6CE /* ServiceManager.swift in Sources */,
 				7A813FBF1D5678EC0008F6CE /* SignUpViewController.swift in Sources */,
 				7A813FBA1D56737C0008F6CE /* UIViewController+systemSpinner.swift in Sources */,
 				7A813FC71D5681970008F6CE /* CustomView.swift in Sources */,
-				7A813F921D56708C0008F6CE /* ViewController.swift in Sources */,
 				7A813FB71D56737C0008F6CE /* NSDate+format.swift in Sources */,
 				7A813FB81D56737C0008F6CE /* StoryboardManager.swift in Sources */,
 				7A813F901D56708C0008F6CE /* AppDelegate.swift in Sources */,

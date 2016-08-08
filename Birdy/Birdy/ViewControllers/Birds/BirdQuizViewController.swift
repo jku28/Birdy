@@ -28,6 +28,11 @@ class BirdQuizViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         navigationItem.title = "Bird Quiz"
     }
 
+    override func viewWillAppear(animated: Bool) {
+        ServiceManager.getRandomBird { (bird, error) in
+            
+        }
+    }
     //MARK: - Actions
 
     @IBAction func onAccept(sender: UIButton) {

@@ -36,6 +36,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         StoryboardManager.initiateStoryboard("Main")
     }
 
+    @IBAction func onBack(sender: UIButton) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+
     //MARK: - UITextFieldDelegate
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {

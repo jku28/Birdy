@@ -1,3 +1,4 @@
+
 //
 //  ServiceManager.swift
 //  Birdy
@@ -8,42 +9,86 @@
 
 import UIKit
 
-let baseUrl = "https://jk208.host.cs.st-andrews.ac.uk/birdwatch/"
+let baseUrl = "https://jk208.host.cs.st-andrews.ac.uk/birdwatch"
 
 class ServiceManager: NSObject {
 
 
     class func getAllBirds(callback:(([Bird],NSError?)->())?) {
+        let urlString = "\(baseUrl)/birds/birdlist"
 
-        let urlString = "\(baseUrl)birds/birdlist"
-
-        let request = NSURLRequest(URL: NSURL(string: urlString)!)
-
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
-
+        LoadRequest(urlString, success: { (data) in
             var birds:[Bird] = []
-
             do {
                 let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
                 guard let birdsArray :NSArray = JSON as? NSArray else {
-                    if callback != nil { callback!([],error)}
+                    if callback != nil { callback!([],NSError(domain: "in-app", code: 1000, userInfo: [NSLocalizedDescriptionKey:"json not array"]))}
                     return
                 }
-
                 for dict in birdsArray {
                     birds.append(Bird(dataDictionary: dict as! NSDictionary))
                 }
-
-                if callback != nil { callback!(birds,error)}
-
+                if callback != nil { callback!(birds,nil)}
             } catch let error as NSError {
                 print("\(error)")
                 if callback != nil { callback!([],error)}
             }
+        }) { (error) in
+            if callback != nil { callback!([],error)}
+        }
+    }
 
-        }.resume()
+    class func getRandomBird(callback:((bird:Bird?,error:NSError?)->())?) {
+        let urlString = "\(baseUrl)/birds/randomBird"
+
+        LoadRequest(urlString, success: { (data) in
+            let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            }) { (error) in
+                print("error \(error)")
+                if callback != nil { callback!(bird: nil,error: error)}
+        }
+    }
+
+    class func login(login:String, password:String,callback:((success:Bool,error:NSError?)->())?) {
+        let urlString = "\(baseUrl)/users/login/\(login)/\(password)"
+        LoadRequest(urlString, success: { (data) in
+            let str = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String
+            let result = stringToBool(str)
+            if callback != nil { callback!(success:result,error:nil)}
+            }) { (error) in
+                if callback != nil { callback!(success:false,error:error)}
+        }
+    }
+
+    class func registerUser() {
 
     }
+
+    class func getUserList() {
+        let urlString = "\(baseUrl)/users/userlist"
+
+        LoadRequest(urlString, success: { (data) in
+            let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("users \(str)")
+            }) { (error) in
+                print("error \(error)")
+        }
+    }
+}
+
+private func LoadRequest(urlString:String,success:((NSData?)->())?,fail:((NSError?)->())?) {
+    let request = NSURLRequest(URL: NSURL(string: urlString)!)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue(), {
+                if error == nil {
+                    if success != nil { success!(data!) }
+                } else {
+                    if fail != nil { fail!(error!) }
+                }
+            })
+            }.resume()
+    })
 }
 
 class Bird : NSObject {

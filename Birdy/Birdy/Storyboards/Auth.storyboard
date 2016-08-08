@@ -101,7 +101,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l3u-PG-Ykb">
                                 <rect key="frame" x="49" y="216" width="502" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="BOs-H1-gSW" id="vCt-vJ-cXe"/>
                                 </connections>
@@ -125,6 +125,16 @@
                                     <action selector="onSignIn:" destination="BOs-H1-gSW" eventType="touchUpInside" id="Rqf-lB-7Kf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="caI-k9-ShA">
+                                <rect key="frame" x="275" y="382" width="50" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="5jQ-Gt-F1Y"/>
+                                </constraints>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="onBack:" destination="BOs-H1-gSW" eventType="touchUpInside" id="r1x-4p-GjL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -139,6 +149,8 @@
                             <constraint firstAttribute="trailing" secondItem="X19-jM-BnR" secondAttribute="trailing" constant="49" id="md6-ZJ-ODo"/>
                             <constraint firstItem="ehv-lv-ZPl" firstAttribute="centerX" secondItem="Poz-eM-Ocr" secondAttribute="centerX" id="or1-K8-Gcr"/>
                             <constraint firstItem="ehv-lv-ZPl" firstAttribute="centerY" secondItem="Poz-eM-Ocr" secondAttribute="centerY" constant="-134.5" id="stY-Yn-psM"/>
+                            <constraint firstItem="caI-k9-ShA" firstAttribute="centerX" secondItem="hQM-9B-WA3" secondAttribute="centerX" id="tDk-fs-lbc"/>
+                            <constraint firstItem="caI-k9-ShA" firstAttribute="top" secondItem="hQM-9B-WA3" secondAttribute="bottom" constant="24" id="uPb-8f-iKu"/>
                         </constraints>
                     </view>
                     <connections>
@@ -168,7 +180,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First and Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zRv-e1-gu0">
                                         <rect key="frame" x="20" y="55" width="503" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                         <connections>
                                             <outlet property="delegate" destination="34A-IJ-g4D" id="axj-ev-7MP"/>
                                         </connections>
@@ -196,7 +208,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="required" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VSR-Fg-yUt">
                                         <rect key="frame" x="20" y="55" width="503" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                         <connections>
                                             <outlet property="delegate" destination="34A-IJ-g4D" id="yMO-hR-Hue"/>
                                         </connections>
@@ -263,7 +275,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="bird@example.com" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k4A-fI-UaP">
                                         <rect key="frame" x="20" y="55" width="503" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                                         <connections>
                                             <outlet property="delegate" destination="34A-IJ-g4D" id="joX-Yd-uww"/>
                                         </connections>
@@ -296,10 +308,21 @@
                                     <action selector="onRegister:" destination="34A-IJ-g4D" eventType="touchUpInside" id="qfz-H0-PO0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isw-yD-5Tk">
+                                <rect key="frame" x="275" y="567" width="50" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Pfp-3w-bVj"/>
+                                </constraints>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="onBack:" destination="34A-IJ-g4D" eventType="touchUpInside" id="nLi-9x-b8p"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Fdd-jB-zkb" firstAttribute="top" secondItem="KzG-hn-Qc2" secondAttribute="bottom" constant="3" id="0g5-RU-9AV"/>
+                            <constraint firstItem="Isw-yD-5Tk" firstAttribute="centerX" secondItem="EB9-1P-wcR" secondAttribute="centerX" id="5FS-2M-Fgl"/>
                             <constraint firstItem="YNT-ml-O5j" firstAttribute="leading" secondItem="PUg-4b-69j" secondAttribute="leading" constant="28" id="9Vm-dp-8uc"/>
                             <constraint firstItem="EB9-1P-wcR" firstAttribute="top" secondItem="I5v-7t-Fv9" secondAttribute="bottom" id="A4O-gN-1Ab"/>
                             <constraint firstItem="I5v-7t-Fv9" firstAttribute="top" secondItem="YNT-ml-O5j" secondAttribute="bottom" id="BP2-2Y-cbZ"/>
@@ -312,6 +335,7 @@
                             <constraint firstItem="NhT-th-5ys" firstAttribute="top" secondItem="Fdd-jB-zkb" secondAttribute="bottom" id="ZBz-sK-fhc"/>
                             <constraint firstItem="YNT-ml-O5j" firstAttribute="top" secondItem="NhT-th-5ys" secondAttribute="bottom" id="ccL-Se-Twj"/>
                             <constraint firstItem="I5v-7t-Fv9" firstAttribute="leading" secondItem="PUg-4b-69j" secondAttribute="leading" constant="28" id="dBX-eG-h6X"/>
+                            <constraint firstItem="Isw-yD-5Tk" firstAttribute="top" secondItem="EB9-1P-wcR" secondAttribute="bottom" constant="8" id="iHG-He-dJk"/>
                             <constraint firstAttribute="trailing" secondItem="YNT-ml-O5j" secondAttribute="trailing" constant="29" id="kIc-lN-f68"/>
                             <constraint firstAttribute="trailing" secondItem="EB9-1P-wcR" secondAttribute="trailing" id="sFg-4V-orR"/>
                         </constraints>

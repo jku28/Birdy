@@ -33,6 +33,7 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
             self?.presentingSights = birds
             self?.tableView.reloadData()
             self?.stopAnimateWait()
+            if (error != nil) { print("error \(error)") }
         }
     }
 
