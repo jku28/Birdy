@@ -61,7 +61,8 @@ class BirdQuizViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             return
         }
         startAnimateWait()
-        ServiceManager.updateBird(self.bird!.birdId, vote: "\(namePicker.selectedRowInComponent(0))") {[weak self] (result, error) in
+        let voteStr = bird?.votes[namePicker.selectedRowInComponent(0)][0] as! String
+        ServiceManager.updateBird(self.bird!.birdId, vote: "\(voteStr)") {[weak self] (result, error) in
             self?.stopAnimateWait()
             if (error == nil) {
                 self?.loadBirdInfo()

@@ -137,7 +137,8 @@ class ServiceManager: NSObject {
     }
 
     class func updateBird(birdId:String, vote:String, callback:((result:Bool,error:NSError?)->())?) {
-        let urlString = "\(baseUrl)/birds/updatebird/\(birdId)/\(vote)"
+        let encVote = vote.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        let urlString = "\(baseUrl)/birds/updatebird/\(birdId)/\(encVote!)"
         LoadRequest(urlString, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("vote res \(str)")
