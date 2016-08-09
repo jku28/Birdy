@@ -179,7 +179,7 @@ class Bird : NSObject {
     var date:String! = ""
     var weather:String! = ""
     var status:String! = ""
-    var votes:[String:AnyObject!]! = [:]
+    var votes:[[AnyObject!]]! = []
     var seenbyuser:[String]! = []
     var owner:String! = ""
     var comments:String! = ""
@@ -202,7 +202,7 @@ class Bird : NSObject {
         self.date = dataDictionary["date"] as? String ?? ""
         self.weather = dataDictionary["weather"] as? String ?? ""
         self.status = dataDictionary["status"] as? String ?? ""
-        self.votes = dataDictionary["votes"] as? [String:AnyObject!] ?? [:]
+        self.votes = dataDictionary["votes"] as? [[AnyObject!]] ?? []
         self.seenbyuser = dataDictionary["seenbyuser"] as? [String] ?? []
         self.owner = dataDictionary["owner"] as? String ?? ""
         self.comments = dataDictionary["comments"] as? String ?? ""

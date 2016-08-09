@@ -37,6 +37,7 @@ class BirdQuizViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         ServiceManager.getRandomBird {[weak self] (bird, error) in
             if error == nil {
                 self?.bird = bird
+                self?.namePicker.reloadAllComponents()
                 //setup data
                 self?.birdIV.image = UIImage(data: NSData(base64EncodedString: bird!.image, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)
             } else {
@@ -77,11 +78,16 @@ class BirdQuizViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
 
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 3
+        return (bird?.votes.count) ?? 0
     }
 
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return ["Eagle","Hawk","Pidgeon"][row]
+        var title = ""
+        if let votes = bird?.votes {
+            let vote = votes[row]
+            title = vote[0] as! String
+        }
+        return title
     }
 
 
