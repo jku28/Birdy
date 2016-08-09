@@ -37,7 +37,11 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Actions
 
     @IBAction func onPasswordSubmit(sender: UIButton) {
-        
+        if passwordTF.text == passwordConfirmTF.text {
+            ServiceManager.updatePassword(passwordTF.text!)
+        } else {
+            AppUtils.showAlert(owner: self, title: nil, message: "Passwords not equal", actions: nil)
+        }
     }
 
     @IBAction func onSignout(sender: UIButton) {

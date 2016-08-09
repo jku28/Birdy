@@ -28,6 +28,10 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     override func viewWillAppear(animated: Bool) {
+        loadSights()
+    }
+
+    private func loadSights() {
         self.startAnimateWait()
         ServiceManager.getAllBirds {[weak self] (birds, error) in
             self?.presentingSights = birds
@@ -35,10 +39,6 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
             self?.stopAnimateWait()
             if (error != nil) { print("error \(error)") }
         }
-    }
-
-    private func loadSights() {
-        // Load sights and set them to @presenting and reload table to refresh data
     }
 
     //MARK: - UITableViewDelegate, UITableViewDataSource

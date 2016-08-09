@@ -11,8 +11,81 @@ import UIKit
 
 let baseUrl = "https://jk208.host.cs.st-andrews.ac.uk/birdwatch"
 
+
 class ServiceManager: NSObject {
 
+    static var loggedUser:User?
+    static var users:[User] = []
+
+    //MARK: - Auth and User
+
+    class func login(login:String, password:String,callback:((success:Bool,error:NSError?)->())?) {
+        let urlString = "\(baseUrl)/users/login/\(login)/\(password)"
+        LoadRequest(urlString, success: { (data) in
+            if let str = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
+                if str.containsString("403") {
+                    if callback != nil { callback!(success:false,error:NSError(domain: "in-app", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Forbidden (403)"]))}
+                } else if str.containsString("502") {
+                    if callback != nil { callback!(success:false,error:NSError(domain: "in-app", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Bad gateway (502)"]))}
+                }
+                let result = stringToBool(str)
+                if result {
+                    for user in users {
+                        if user.userName == login {
+                            loggedUser = user
+                            break
+                        }
+                    }
+
+                    if callback != nil { callback!(success:result,error:nil)}
+                } else {
+                    if callback != nil { callback!(success:false,error:NSError(domain: "server", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Please check credentials"]))}
+                }
+            } else {
+                if callback != nil { callback!(success:false,error:nil)}
+            }
+        }) { (error) in
+            if callback != nil { callback!(success:false,error:error)}
+        }
+    }
+
+    class func registerUser() {
+
+    }
+
+    class func getUserList() {
+        let urlString = "\(baseUrl)/users/userlist"
+
+        LoadRequest(urlString, success: { (data) in
+            users = []
+            do {
+                let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
+                guard let usersArray :NSArray = JSON as? NSArray else {
+                    return
+                }
+                for dict in usersArray {
+                    users.append(User(dataDictionary: dict as! NSDictionary))
+                }
+
+            } catch let error as NSError {
+                print("\(error)")
+            }
+        }) { (error) in
+            print("error \(error)")
+        }
+    }
+
+    class func updatePassword (newPassword:String) {
+        ///changepassword/:username/:password
+        let urlString = "\(baseUrl)/users/changepassword/\(loggedUser!.userId)/\(newPassword)"
+        LoadRequest(urlString, success: { (data) in
+            let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("pass updated \(str)")
+        }) { (error) in
+            print("error \(error)")
+        }
+    }
+    //MARK: - Birds
 
     class func getAllBirds(callback:(([Bird],NSError?)->())?) {
         let urlString = "\(baseUrl)/birds/birdlist"
@@ -42,52 +115,37 @@ class ServiceManager: NSObject {
         let urlString = "\(baseUrl)/birds/randombird"
 
         LoadRequest(urlString, success: { (data) in
-            let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("rnd brd \(str)")
-            }) { (error) in
-                print("error \(error)")
+            do {
+                let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
+                guard let birdsArray :NSArray = JSON as? NSArray else {
+                    if callback != nil { callback!(bird: nil,error: NSError(domain: "in-app", code: 1000, userInfo: [NSLocalizedDescriptionKey:"json not array"]))}
+                    return
+                }
+                let bird = Bird(dataDictionary: birdsArray.firstObject as! NSDictionary)
+                if callback != nil { callback!(bird: bird,error: nil)}
+            } catch let error as NSError {
+                print("\(error)")
                 if callback != nil { callback!(bird: nil,error: error)}
-        }
-    }
-
-    class func login(login:String, password:String,callback:((success:Bool,error:NSError?)->())?) {
-        let urlString = "\(baseUrl)/users/login/\(login)/\(password)"
-        LoadRequest(urlString, success: { (data) in
-            if let str = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
-                if str.containsString("403") {
-                    if callback != nil { callback!(success:false,error:NSError(domain: "in-app", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Forbidden (403)"]))}
-                } else if str.containsString("502") {
-                    if callback != nil { callback!(success:false,error:NSError(domain: "in-app", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Bad gateway (502)"]))}
-                }
-                let result = stringToBool(str)
-                if result {
-                    if callback != nil { callback!(success:result,error:nil)}
-                } else {
-                    if callback != nil { callback!(success:false,error:NSError(domain: "server", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Please check credentials"]))}
-                }
-            } else {
-                if callback != nil { callback!(success:false,error:nil)}
             }
-            }) { (error) in
-                if callback != nil { callback!(success:false,error:error)}
-        }
+            }, fail: {(error) in
+                if callback != nil { callback!(bird: nil,error: error)}
+        })
     }
 
-    class func registerUser() {
-
-    }
-
-    class func getUserList() {
-        let urlString = "\(baseUrl)/users/userlist"
-
+    class func updateBird(birdId:String, vote:String, callback:((result:Bool,error:NSError?)->())?) {
+        let urlString = "\(baseUrl)/birds/updatebird/\(birdId)/\(vote)"
         LoadRequest(urlString, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("users \(str)")
-            }) { (error) in
-                print("error \(error)")
+            print("vote res \(str)")
+            if callback != nil { callback!(result: true,error: nil)}
+
+        }) { (error) in
+            if callback != nil { callback!(result: false,error: error)}
         }
     }
 }
+
+//MARK: - Global
 
 private func LoadRequest(urlString:String,success:((NSData?)->())?,fail:((NSError?)->())?) {
     let request = NSURLRequest(URL: NSURL(string: urlString)!)
@@ -103,6 +161,8 @@ private func LoadRequest(urlString:String,success:((NSData?)->())?,fail:((NSErro
             }.resume()
     })
 }
+
+//MARK: - Additional classes
 
 class Bird : NSObject {
     var birdId:String! = ""
@@ -141,6 +201,22 @@ class Bird : NSObject {
         self.seenbyuser = dataDictionary["seenbyuser"] as? [String] ?? []
         self.owner = dataDictionary["owner"] as? String ?? ""
         self.comments = dataDictionary["comments"] as? String ?? ""
+    }
+}
 
+class User:NSObject {
+    var userId:String! = ""
+    var userName:String! = ""
+    var fullName:String! = ""
+    var email:String! = ""
+    var password:String! = ""
+
+    init(dataDictionary:NSDictionary) {
+        super.init()
+        self.userId = dataDictionary["_id"] as? String ?? ""
+        self.userName = dataDictionary["username"] as? String ?? ""
+        self.fullName = dataDictionary["fullname"] as? String ?? ""
+        self.email = dataDictionary["email"] as? String ?? ""
+        self.password = dataDictionary["password"] as? String ?? ""
     }
 }

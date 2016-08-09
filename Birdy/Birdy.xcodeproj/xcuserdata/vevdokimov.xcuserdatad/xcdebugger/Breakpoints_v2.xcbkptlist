@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Birdy/ViewControllers/Settings/SettingsViewController.swift"
-            timestampString = "492371097.216114"
+            timestampString = "492424243.416097"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "textFieldShouldReturn(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Birdy/ViewControllers/Sights/SightsListViewController.swift"
+            timestampString = "492421339.046848"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +42,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Birdy/Core/ServiceManager.swift"
-            timestampString = "492385876.482832"
+            timestampString = "492423909.03499"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "getRandomBird(_:)"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "login(_:password:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Birdy/Core/ServiceManager.swift"
+            timestampString = "492424236.584244"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "updatePassword(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

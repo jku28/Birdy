@@ -17,6 +17,7 @@ class BirdQuizViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
     //MARK: - vars
 
+    var bird:Bird?
 
     //MARK: - funcs
 
@@ -29,16 +30,44 @@ class BirdQuizViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
 
     override func viewWillAppear(animated: Bool) {
-        ServiceManager.getRandomBird { (bird, error) in
-            
+        loadBirdInfo()
+    }
+
+    private func loadBirdInfo() {
+        ServiceManager.getRandomBird {[weak self] (bird, error) in
+            if error == nil {
+                self?.bird = bird
+                //setup data
+                self?.birdIV.image = UIImage(data: NSData(base64EncodedString: bird!.image, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)
+            } else {
+                AppUtils.showAlert(owner: self, title: nil, message: (error?.localizedDescription)!, actions: nil)
+            }
         }
     }
     //MARK: - Actions
 
     @IBAction func onAccept(sender: UIButton) {
+        vote(true)
     }
 
     @IBAction func onDecline(sender: UIButton) {
+
+        vote(false)
+    }
+
+    private func vote(vote:Bool) {
+        guard self.bird != nil else {
+            return
+        }
+        startAnimateWait()
+        ServiceManager.updateBird(self.bird!.birdId, vote: "\(namePicker.selectedRowInComponent(0))") {[weak self] (result, error) in
+            self?.stopAnimateWait()
+            if (error == nil) {
+                self?.loadBirdInfo()
+            } else {
+                AppUtils.showAlert(owner: self!, title: nil, message: (error?.localizedDescription)!, actions: nil)
+            }
+        }
     }
 
     //MARK: - UIPickerViewDelegate, UIPickerViewDataSource
