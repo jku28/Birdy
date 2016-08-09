@@ -38,7 +38,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func onPasswordSubmit(sender: UIButton) {
         if passwordTF.text == passwordConfirmTF.text {
-            ServiceManager.updatePassword(passwordTF.text!)
+            startAnimateWait()
+            ServiceManager.updatePassword(passwordTF.text!, callback: {[weak self] (success, error) in
+                if success {
+                    self?.stopAnimateWait()
+                } else {
+                    AppUtils.showAlert(owner: self!, title: nil, message: (error?.localizedDescription)!, actions: nil)
+                }
+            })
         } else {
             AppUtils.showAlert(owner: self, title: nil, message: "Passwords not equal", actions: nil)
         }

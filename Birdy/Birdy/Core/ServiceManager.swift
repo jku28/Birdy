@@ -58,6 +58,7 @@ class ServiceManager: NSObject {
 
         LoadRequest(urlString, success: { (data) in
             users = []
+            print("users \(NSString(data: data!, encoding: NSUTF8StringEncoding))")
             do {
                 let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
                 guard let usersArray :NSArray = JSON as? NSArray else {
@@ -75,14 +76,16 @@ class ServiceManager: NSObject {
         }
     }
 
-    class func updatePassword (newPassword:String) {
+    class func updatePassword (newPassword:String, callback:((success:Bool,error:NSError?)->())?) {
         ///changepassword/:username/:password
-        let urlString = "\(baseUrl)/users/changepassword/\(loggedUser!.userId)/\(newPassword)"
+        let urlString = "\(baseUrl)/users/changepassword/\(loggedUser!.userName)/\(newPassword)"
         LoadRequest(urlString, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("pass updated \(str)")
+            if callback != nil { callback!(success:true,error:nil) }
         }) { (error) in
             print("error \(error)")
+            if callback != nil { callback!(success:false,error:error) }
         }
     }
     //MARK: - Birds
@@ -148,7 +151,8 @@ class ServiceManager: NSObject {
 //MARK: - Global
 
 private func LoadRequest(urlString:String,success:((NSData?)->())?,fail:((NSError?)->())?) {
-    let request = NSURLRequest(URL: NSURL(string: urlString)!)
+    let encodedStr = urlString//.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) as! String
+    let request = NSURLRequest(URL: NSURL(string: encodedStr)!)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
         NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
             dispatch_async(dispatch_get_main_queue(), {
