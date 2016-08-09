@@ -78,7 +78,7 @@ class ServiceManager: NSObject {
 
     class func updatePassword (newPassword:String, callback:((success:Bool,error:NSError?)->())?) {
         ///changepassword/:username/:password
-        let urlString = "\(baseUrl)/users/changepassword/\(loggedUser!.userName)/\(newPassword)"
+        let urlString = "\(baseUrl)/users/changepassword/\(loggedUser!.userId)/\(newPassword)"
         LoadRequest(urlString, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("pass updated \(str)")
@@ -95,6 +95,7 @@ class ServiceManager: NSObject {
 
         LoadRequest(urlString, success: { (data) in
             var birds:[Bird] = []
+            print("got birds \(NSString(data: data!, encoding: NSUTF8StringEncoding))")
             do {
                 let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
                 guard let birdsArray :NSArray = JSON as? NSArray else {
