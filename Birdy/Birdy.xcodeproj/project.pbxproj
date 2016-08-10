@@ -27,6 +27,8 @@
 		7A813FC71D5681970008F6CE /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813FC61D5681970008F6CE /* CustomView.swift */; };
 		7A813FCA1D5683DF0008F6CE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813FC91D5683DF0008F6CE /* SettingsViewController.swift */; };
 		7A813FCD1D568C9B0008F6CE /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813FCC1D568C9B0008F6CE /* ServiceManager.swift */; };
+		7A991FBA1D5B2DC0001F85D5 /* AddSightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A991FB91D5B2DC0001F85D5 /* AddSightViewController.swift */; };
+		7A991FBC1D5B2DD2001F85D5 /* AddBirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A991FBB1D5B2DD2001F85D5 /* AddBirdViewController.swift */; };
 		7ACB374E1D56958100D1A45E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ACB374D1D56958100D1A45E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,8 @@
 		7A813FC61D5681970008F6CE /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomView.swift; path = Views/CustomView.swift; sourceTree = "<group>"; };
 		7A813FC91D5683DF0008F6CE /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/Settings/SettingsViewController.swift; sourceTree = "<group>"; };
 		7A813FCC1D568C9B0008F6CE /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = Core/ServiceManager.swift; sourceTree = "<group>"; };
+		7A991FB91D5B2DC0001F85D5 /* AddSightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddSightViewController.swift; path = ViewControllers/Sights/AddSightViewController.swift; sourceTree = "<group>"; };
+		7A991FBB1D5B2DD2001F85D5 /* AddBirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddBirdViewController.swift; path = ViewControllers/Sights/AddBirdViewController.swift; sourceTree = "<group>"; };
 		7ACB374D1D56958100D1A45E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,6 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				7A813FC11D567C870008F6CE /* SightsListViewController.swift */,
+				7A991FB91D5B2DC0001F85D5 /* AddSightViewController.swift */,
+				7A991FBB1D5B2DD2001F85D5 /* AddBirdViewController.swift */,
 			);
 			name = Sights;
 			sourceTree = "<group>";
@@ -268,9 +274,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A991FBA1D5B2DC0001F85D5 /* AddSightViewController.swift in Sources */,
 				7A813FC21D567C870008F6CE /* SightsListViewController.swift in Sources */,
 				7A813FBD1D5678190008F6CE /* SignInViewController.swift in Sources */,
 				7A813FC51D567F600008F6CE /* BirdQuizViewController.swift in Sources */,
+				7A991FBC1D5B2DD2001F85D5 /* AddBirdViewController.swift in Sources */,
 				7A2CDEE01D590436001399DA /* AppUtils.swift in Sources */,
 				7A813FB91D56737C0008F6CE /* UIViewController+keyboard.swift in Sources */,
 				7A813FCD1D568C9B0008F6CE /* ServiceManager.swift in Sources */,

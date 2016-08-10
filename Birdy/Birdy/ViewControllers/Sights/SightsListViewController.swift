@@ -33,7 +33,7 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     private func loadSights() {
         self.startAnimateWait()
-        ServiceManager.getAllBirds {[weak self] (birds, error) in
+        ServiceManager.getBirdsList {[weak self] (birds, error) in
             self?.presentingSights = birds
             self?.tableView.reloadData()
             self?.stopAnimateWait()
