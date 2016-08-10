@@ -157,7 +157,9 @@ class ServiceManager: NSObject {
     }
 
     class func getRandomBird(callback:((bird:Bird?,error:NSError?)->())?) {
-        let urlString = "\(baseUrl)/birds/randombird"
+        let urlString = "\(baseUrl)/birds/randombird/\(loggedUser!.userId)"
+        print(loggedUser!.userId)
+        print(loggedUser!.userName)
 
         LoadRequest(urlString, uploadData:nil, success: { (data) in
             do {
@@ -179,8 +181,8 @@ class ServiceManager: NSObject {
 
     class func updateBird(birdId:String, vote:String, callback:((result:Bool,error:NSError?)->())?) {
         let encVote = vote.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
-        let urlString = "\(baseUrl)/birds/updatebird/\(birdId)/\(encVote!)"
-        LoadRequest(urlString, uploadData:nil, success: { (data) in
+        let urlString = "\(baseUrl)/birds/updatebird/\(birdId)/\(encVote!)/\(loggedUser!.userId)"
+        LoadRequest(urlString, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("vote res \(str)")
             if callback != nil { callback!(result: true,error: nil)}
