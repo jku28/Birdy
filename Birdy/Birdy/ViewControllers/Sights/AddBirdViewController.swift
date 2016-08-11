@@ -41,7 +41,13 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
         let saved = UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default) {[weak self] (action) in
             self?.openSavedPhotoPicker()
         }
-        AppUtils.showAlert(owner: self, title: nil, message: "Please select picture source", actions: [camera,saved])
+        let clear = UIAlertAction(title: "Clear", style:UIAlertActionStyle.Default) {[weak self] (action) in
+            self?.birdIV.image = nil
+        }
+        if self.birdIV.image == nil {
+            clear.enabled = false
+        }
+        AppUtils.showAlert(owner: self, title: nil, message: "Please select picture source", actions: [camera,saved, clear])
     }
 
     @IBAction func onAddird(sender: UIButton) {
