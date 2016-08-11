@@ -85,6 +85,7 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
         newBird.date = NSDate().stringWithFormat(kFormat_MMddyyyy)
         newBird.owner = ServiceManager.loggedUser?.userId ?? ""
         newBird.seenbyuser = [ServiceManager.loggedUser?.userId ?? ""]
+        newBird.votes.append([commonNameTF.text, 1])
         newBird.status = "unverified"
         newBird.latitude = 0
         newBird.longitude = 0
