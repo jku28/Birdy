@@ -67,7 +67,7 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
 
 
         if birdIV.image != nil {
-            let imageData = UIImageJPEGRepresentation(birdIV.image!, 0.0001)
+            let imageData = UIImageJPEGRepresentation(birdIV.image!, 0.001)
             let imageBase64Str = imageData?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
             newBird.image = imageBase64Str
         }
@@ -76,8 +76,9 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
         newBird.commonname = commonNameTF.text
         newBird.weather = weatherTF.text
         newBird.comments = commentsTV.text ?? ""
-        newBird.date = NSDate().stringWithFormat("MM-dd-yyyy")
+        newBird.date = NSDate().stringWithFormat(kFormat_MMddyyyy)
         newBird.owner = ServiceManager.loggedUser?.userId ?? ""
+        newBird.seenbyuser = [ServiceManager.loggedUser?.userId ?? ""]
         newBird.status = "unverified"
         newBird.latitude = 0
         newBird.longitude = 0
@@ -97,6 +98,10 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
 
     override func didPickImagePickerImage(image: UIImage) {
         birdIV.image = image
+
+        uploadImage(UIImageJPEGRepresentation(image, 0.01)!) { (success, error) in
+
+        }
     }
 
     //MARK: - UITextFieldDelegate

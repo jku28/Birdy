@@ -16,7 +16,7 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     //MARK: - vars
 
-    private var presentingSights:[Bird] = []
+    private var presentingSights:[BirdsDateGroupObject] = []
 
     //MARK: - funcs
 
@@ -25,6 +25,9 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
 
         // Do any additional setup after loading the view.
         navigationItem.title = "Sightings"
+        tableView.registerNib(UINib(nibName: BirdsDateGroupCell.stringName(), bundle: nil), forCellReuseIdentifier: BirdsDateGroupCell.stringName())
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 360.0
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -33,12 +36,47 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     private func loadSights() {
         self.startAnimateWait()
-        ServiceManager.getBirdsList {[weak self] (birds, error) in
-            self?.presentingSights = birds
-            self?.tableView.reloadData()
+        ServiceManager.getAllBirds {[weak self] (birds, error) in
+
+            self?.sortBirds(birds)
+
             self?.stopAnimateWait()
             if (error != nil) { print("error \(error)") }
         }
+    }
+
+    private func sortBirds(birds:[Bird]) {
+
+        var groupped:[String:[Bird]!] = [:]
+        for bird in birds {
+            if groupped.count == 0 {
+                groupped[bird.date] = [bird]
+            } else {
+                var exist = false
+                for key in groupped.keys {
+                    if key == bird.date {
+                        exist = true
+                        var birds = groupped[key]
+                        birds!.append(bird)
+                        groupped[key] = birds
+                        break
+                    }
+                }
+                if !exist {
+                    groupped[bird.date] = [bird]
+                }
+            }
+        }
+
+        presentingSights.removeAll()
+
+
+        for key in groupped.keys {
+            presentingSights.append(BirdsDateGroupObject(birds: groupped[key]!))
+        }
+
+        tableView.reloadData()
+
     }
 
     //MARK: - UITableViewDelegate, UITableViewDataSource
@@ -48,15 +86,21 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
-        }
-        let bird = presentingSights[indexPath.row]
-        cell!.textLabel?.text = bird.commonname
-        cell!.detailTextLabel?.text = bird.weather
-        cell!.selectionStyle = .None
-        return cell!
+        let object = presentingSights[indexPath.row] as BaseTableCellObject
+
+        let cell = tableView.dequeueReusableCellWithIdentifier(object.cellClass.stringName()) as! BaseTableCell
+        cell.selectionStyle = .None
+
+        cell.setup(fromObject: object)
+
+        return cell
     }
 
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = StoryboardManager.controllerFrom(storyboard: sbId_Sights, withId: sbId_Sights_BirdsSubVC) as! BirdsSubListViewController
+        let obj = presentingSights[indexPath.row]
+        vc.birds = obj.birds
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }

@@ -30,6 +30,16 @@
 		7A991FBA1D5B2DC0001F85D5 /* AddSightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A991FB91D5B2DC0001F85D5 /* AddSightViewController.swift */; };
 		7A991FBC1D5B2DD2001F85D5 /* AddBirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A991FBB1D5B2DD2001F85D5 /* AddBirdViewController.swift */; };
 		7A991FBE1D5CD000001F85D5 /* UIViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A991FBD1D5CD000001F85D5 /* UIViewController+ImagePicker.swift */; };
+		7AC2D4811D5D074B00BC2E19 /* BirdsDateGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2D4801D5D074B00BC2E19 /* BirdsDateGroupCell.swift */; };
+		7AC2D4841D5D077B00BC2E19 /* BaseTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2D4821D5D077B00BC2E19 /* BaseTableCell.swift */; };
+		7AC2D4851D5D077B00BC2E19 /* BaseTableCellObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2D4831D5D077B00BC2E19 /* BaseTableCellObject.swift */; };
+		7AC2D4871D5D079500BC2E19 /* BirdsDateGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC2D4861D5D079500BC2E19 /* BirdsDateGroupCell.xib */; };
+		7AC2D4891D5D085500BC2E19 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2D4881D5D085500BC2E19 /* Constants.swift */; };
+		7AC2D48B1D5D0CA200BC2E19 /* BIrdsSubListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2D48A1D5D0CA200BC2E19 /* BIrdsSubListViewController.swift */; };
+		7AC2D48D1D5D0D0000BC2E19 /* BirdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2D48C1D5D0D0000BC2E19 /* BirdCell.swift */; };
+		7AC2D48F1D5D0D0C00BC2E19 /* BirdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC2D48E1D5D0D0C00BC2E19 /* BirdCell.xib */; };
+		7AC2D4911D5D106D00BC2E19 /* ClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2D4901D5D106D00BC2E19 /* ClassName.swift */; };
+		7AC2D4931D5D205500BC2E19 /* UIView+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2D4921D5D205500BC2E19 /* UIView+cornerRadius.swift */; };
 		7ACB374E1D56958100D1A45E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ACB374D1D56958100D1A45E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +69,16 @@
 		7A991FB91D5B2DC0001F85D5 /* AddSightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddSightViewController.swift; path = ViewControllers/Sights/AddSightViewController.swift; sourceTree = "<group>"; };
 		7A991FBB1D5B2DD2001F85D5 /* AddBirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddBirdViewController.swift; path = ViewControllers/Sights/AddBirdViewController.swift; sourceTree = "<group>"; };
 		7A991FBD1D5CD000001F85D5 /* UIViewController+ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+ImagePicker.swift"; path = "Core/UIViewController+ImagePicker.swift"; sourceTree = "<group>"; };
+		7AC2D4801D5D074B00BC2E19 /* BirdsDateGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BirdsDateGroupCell.swift; path = Views/BirdsDateGroupCell.swift; sourceTree = "<group>"; };
+		7AC2D4821D5D077B00BC2E19 /* BaseTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableCell.swift; path = Views/BaseTableCell.swift; sourceTree = "<group>"; };
+		7AC2D4831D5D077B00BC2E19 /* BaseTableCellObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableCellObject.swift; path = Views/BaseTableCellObject.swift; sourceTree = "<group>"; };
+		7AC2D4861D5D079500BC2E19 /* BirdsDateGroupCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BirdsDateGroupCell.xib; path = Views/BirdsDateGroupCell.xib; sourceTree = "<group>"; };
+		7AC2D4881D5D085500BC2E19 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Core/Constants.swift; sourceTree = "<group>"; };
+		7AC2D48A1D5D0CA200BC2E19 /* BIrdsSubListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BIrdsSubListViewController.swift; path = ViewControllers/Sights/BIrdsSubListViewController.swift; sourceTree = "<group>"; };
+		7AC2D48C1D5D0D0000BC2E19 /* BirdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BirdCell.swift; path = Views/BirdCell.swift; sourceTree = "<group>"; };
+		7AC2D48E1D5D0D0C00BC2E19 /* BirdCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BirdCell.xib; path = Views/BirdCell.xib; sourceTree = "<group>"; };
+		7AC2D4901D5D106D00BC2E19 /* ClassName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClassName.swift; path = Core/ClassName.swift; sourceTree = "<group>"; };
+		7AC2D4921D5D205500BC2E19 /* UIView+cornerRadius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+cornerRadius.swift"; path = "Core/UIView+cornerRadius.swift"; sourceTree = "<group>"; };
 		7ACB374D1D56958100D1A45E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +161,8 @@
 		7A813FA41D56722F0008F6CE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7AC2D4821D5D077B00BC2E19 /* BaseTableCell.swift */,
+				7AC2D4831D5D077B00BC2E19 /* BaseTableCellObject.swift */,
 				7A991FBF1D5CE5F6001F85D5 /* Sights */,
 				7A813FC61D5681970008F6CE /* CustomView.swift */,
 			);
@@ -153,6 +175,7 @@
 				7A2CDEDF1D590436001399DA /* AppUtils.swift */,
 				7A813FB41D56737C0008F6CE /* StoryboardManager.swift */,
 				7A813FCC1D568C9B0008F6CE /* ServiceManager.swift */,
+				7AC2D4881D5D085500BC2E19 /* Constants.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -172,6 +195,7 @@
 				7A813FC11D567C870008F6CE /* SightsListViewController.swift */,
 				7A991FB91D5B2DC0001F85D5 /* AddSightViewController.swift */,
 				7A991FBB1D5B2DD2001F85D5 /* AddBirdViewController.swift */,
+				7AC2D48A1D5D0CA200BC2E19 /* BIrdsSubListViewController.swift */,
 			);
 			name = Sights;
 			sourceTree = "<group>";
@@ -195,6 +219,8 @@
 		7A813FCB1D568C6E0008F6CE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				7AC2D4921D5D205500BC2E19 /* UIView+cornerRadius.swift */,
+				7AC2D4901D5D106D00BC2E19 /* ClassName.swift */,
 				7A813FB31D56737C0008F6CE /* NSDate+format.swift */,
 				7A813FB51D56737C0008F6CE /* UIViewController+keyboard.swift */,
 				7A813FB61D56737C0008F6CE /* UIViewController+systemSpinner.swift */,
@@ -205,6 +231,10 @@
 		7A991FBF1D5CE5F6001F85D5 /* Sights */ = {
 			isa = PBXGroup;
 			children = (
+				7AC2D4861D5D079500BC2E19 /* BirdsDateGroupCell.xib */,
+				7AC2D4801D5D074B00BC2E19 /* BirdsDateGroupCell.swift */,
+				7AC2D48E1D5D0D0C00BC2E19 /* BirdCell.xib */,
+				7AC2D48C1D5D0D0000BC2E19 /* BirdCell.swift */,
 			);
 			name = Sights;
 			sourceTree = "<group>";
@@ -271,6 +301,8 @@
 				7A813FA61D5672610008F6CE /* Auth.storyboard in Resources */,
 				7A2CDEDD1D59041A001399DA /* Birds.storyboard in Resources */,
 				7A813FA81D56727A0008F6CE /* Main.storyboard in Resources */,
+				7AC2D48F1D5D0D0C00BC2E19 /* BirdCell.xib in Resources */,
+				7AC2D4871D5D079500BC2E19 /* BirdsDateGroupCell.xib in Resources */,
 				7A813F9A1D56708C0008F6CE /* LaunchScreen.storyboard in Resources */,
 				7A813FAD1D5672E70008F6CE /* Search.storyboard in Resources */,
 				7ACB374E1D56958100D1A45E /* Assets.xcassets in Resources */,
@@ -286,17 +318,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A991FBA1D5B2DC0001F85D5 /* AddSightViewController.swift in Sources */,
+				7AC2D4931D5D205500BC2E19 /* UIView+cornerRadius.swift in Sources */,
+				7AC2D48B1D5D0CA200BC2E19 /* BIrdsSubListViewController.swift in Sources */,
+				7AC2D4851D5D077B00BC2E19 /* BaseTableCellObject.swift in Sources */,
+				7AC2D4841D5D077B00BC2E19 /* BaseTableCell.swift in Sources */,
 				7A813FC21D567C870008F6CE /* SightsListViewController.swift in Sources */,
 				7A813FBD1D5678190008F6CE /* SignInViewController.swift in Sources */,
+				7AC2D48D1D5D0D0000BC2E19 /* BirdCell.swift in Sources */,
 				7A813FC51D567F600008F6CE /* BirdQuizViewController.swift in Sources */,
 				7A991FBC1D5B2DD2001F85D5 /* AddBirdViewController.swift in Sources */,
+				7AC2D4911D5D106D00BC2E19 /* ClassName.swift in Sources */,
 				7A2CDEE01D590436001399DA /* AppUtils.swift in Sources */,
 				7A813FB91D56737C0008F6CE /* UIViewController+keyboard.swift in Sources */,
 				7A813FCD1D568C9B0008F6CE /* ServiceManager.swift in Sources */,
 				7A813FBF1D5678EC0008F6CE /* SignUpViewController.swift in Sources */,
 				7A813FBA1D56737C0008F6CE /* UIViewController+systemSpinner.swift in Sources */,
 				7A813FC71D5681970008F6CE /* CustomView.swift in Sources */,
+				7AC2D4811D5D074B00BC2E19 /* BirdsDateGroupCell.swift in Sources */,
 				7A813FB71D56737C0008F6CE /* NSDate+format.swift in Sources */,
+				7AC2D4891D5D085500BC2E19 /* Constants.swift in Sources */,
 				7A813FB81D56737C0008F6CE /* StoryboardManager.swift in Sources */,
 				7A813F901D56708C0008F6CE /* AppDelegate.swift in Sources */,
 				7A991FBE1D5CD000001F85D5 /* UIViewController+ImagePicker.swift in Sources */,

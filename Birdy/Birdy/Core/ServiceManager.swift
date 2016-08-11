@@ -228,6 +228,28 @@ private func LoadRequest(urlString:String, uploadData:NSData?,success:((NSData?)
     })
 }
 
+func uploadImage(uploadData:NSData, callback:((success:Bool,error:NSError?)->())?) {
+    let encodedStr = "\(baseUrl)/upload"
+    let request = NSMutableURLRequest(URL: NSURL(string: encodedStr)!)
+    request.HTTPMethod = "POST"
+    request.HTTPBody = uploadData
+    request.addValue("image/jpeg", forHTTPHeaderField: "Content-Type")
+    request.addValue("file", forHTTPHeaderField: "name")
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
+            print("data \(data)")
+            dispatch_async(dispatch_get_main_queue(), {
+                if error == nil {
+                    if callback != nil { callback!(success: true,error: nil) }
+                } else {
+                    if callback != nil { callback!(success: false,error: error) }
+                }
+            })
+            }.resume()
+    })
+}
+
 //MARK: - Additional classes
 
 class Bird : NSObject {
@@ -279,6 +301,7 @@ class Bird : NSObject {
                         BirdKey.ScientificName.rawValue : self.scientificname,
                         BirdKey.Location.rawValue : [self.latitude,self.longitude],
                         BirdKey.Date.rawValue : self.date,
+                        BirdKey.SeenByUser.rawValue : self.seenbyuser,
                         BirdKey.Weather.rawValue : self.weather,
                         BirdKey.Owner.rawValue : self.owner,
                         BirdKey.Comments.rawValue : self.comments,
