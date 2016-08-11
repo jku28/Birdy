@@ -305,7 +305,8 @@ class Bird : NSObject {
                         BirdKey.Weather.rawValue : self.weather,
                         BirdKey.Owner.rawValue : self.owner,
                         BirdKey.Comments.rawValue : self.comments,
-                        BirdKey.Status.rawValue : self.status
+                        BirdKey.Status.rawValue : self.status,
+                        BirdKey.Votes.rawValue : self.votes
                         ]
 
         do {

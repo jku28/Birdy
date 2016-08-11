@@ -173,9 +173,9 @@
 			isa = PBXGroup;
 			children = (
 				7A2CDEDF1D590436001399DA /* AppUtils.swift */,
+				7AC2D4881D5D085500BC2E19 /* Constants.swift */,
 				7A813FB41D56737C0008F6CE /* StoryboardManager.swift */,
 				7A813FCC1D568C9B0008F6CE /* ServiceManager.swift */,
-				7AC2D4881D5D085500BC2E19 /* Constants.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
