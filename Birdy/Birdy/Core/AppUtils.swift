@@ -44,10 +44,12 @@ class AppUtils: NSObject {
         for action in actions {
             alert.addAction(action)
         }
+
         dispatch_async(dispatch_get_main_queue(), {
             
             owner.presentViewController(alert, animated: true, completion: {
             })
+            
         })
         
         return alert

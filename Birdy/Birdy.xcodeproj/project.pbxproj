@@ -29,6 +29,7 @@
 		7A813FCD1D568C9B0008F6CE /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A813FCC1D568C9B0008F6CE /* ServiceManager.swift */; };
 		7A991FBA1D5B2DC0001F85D5 /* AddSightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A991FB91D5B2DC0001F85D5 /* AddSightViewController.swift */; };
 		7A991FBC1D5B2DD2001F85D5 /* AddBirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A991FBB1D5B2DD2001F85D5 /* AddBirdViewController.swift */; };
+		7A991FBE1D5CD000001F85D5 /* UIViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A991FBD1D5CD000001F85D5 /* UIViewController+ImagePicker.swift */; };
 		7ACB374E1D56958100D1A45E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ACB374D1D56958100D1A45E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		7A813FCC1D568C9B0008F6CE /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = Core/ServiceManager.swift; sourceTree = "<group>"; };
 		7A991FB91D5B2DC0001F85D5 /* AddSightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddSightViewController.swift; path = ViewControllers/Sights/AddSightViewController.swift; sourceTree = "<group>"; };
 		7A991FBB1D5B2DD2001F85D5 /* AddBirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddBirdViewController.swift; path = ViewControllers/Sights/AddBirdViewController.swift; sourceTree = "<group>"; };
+		7A991FBD1D5CD000001F85D5 /* UIViewController+ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+ImagePicker.swift"; path = "Core/UIViewController+ImagePicker.swift"; sourceTree = "<group>"; };
 		7ACB374D1D56958100D1A45E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +129,7 @@
 		7A813FA31D5672250008F6CE /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7A991FBD1D5CD000001F85D5 /* UIViewController+ImagePicker.swift */,
 				7A813FBB1D5677F40008F6CE /* Auth */,
 				7A813FC01D567C6E0008F6CE /* Sights */,
 				7A813FC31D567F1E0008F6CE /* Birds */,
@@ -138,6 +141,7 @@
 		7A813FA41D56722F0008F6CE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7A991FBF1D5CE5F6001F85D5 /* Sights */,
 				7A813FC61D5681970008F6CE /* CustomView.swift */,
 			);
 			name = Views;
@@ -196,6 +200,13 @@
 				7A813FB61D56737C0008F6CE /* UIViewController+systemSpinner.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		7A991FBF1D5CE5F6001F85D5 /* Sights */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sights;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +299,7 @@
 				7A813FB71D56737C0008F6CE /* NSDate+format.swift in Sources */,
 				7A813FB81D56737C0008F6CE /* StoryboardManager.swift in Sources */,
 				7A813F901D56708C0008F6CE /* AppDelegate.swift in Sources */,
+				7A991FBE1D5CD000001F85D5 /* UIViewController+ImagePicker.swift in Sources */,
 				7A813FCA1D5683DF0008F6CE /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

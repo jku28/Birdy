@@ -33,6 +33,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if let user = ServiceManager.loggedUser {
+            usernameL.text = "\(user.userName)"
+        }
+    }
     
     //MARK: - Actions
 

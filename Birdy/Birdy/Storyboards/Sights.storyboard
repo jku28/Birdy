@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Sightings-->
@@ -51,28 +52,177 @@
             </objects>
             <point key="canvasLocation" x="1076" y="427"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Bird View Controller-->
         <scene sceneID="hpZ-2a-ccc">
             <objects>
-                <viewController id="qpY-ih-tVB" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="qpY-ih-tVB" customClass="AddBirdViewController" customModule="Birdy" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HQg-QH-QoL"/>
                         <viewControllerLayoutGuide type="bottom" id="aZL-BY-jrI"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7Eo-qd-N1F">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tuy-Td-ekt" customClass="CustomView" customModule="Birdy" customModuleProvider="target">
+                                <rect key="frame" x="20" y="20" width="114" height="114"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yRk-GI-SIl">
+                                        <rect key="frame" x="0.0" y="0.0" width="114" height="114"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="114" id="IQX-18-kTC"/>
+                                            <constraint firstAttribute="width" secondItem="yRk-GI-SIl" secondAttribute="height" multiplier="1:1" id="NMR-WK-aVn"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNv-tR-mJy" userLabel="imgSelect">
+                                        <rect key="frame" x="0.0" y="0.0" width="114" height="114"/>
+                                        <connections>
+                                            <action selector="onSelectImage:" destination="qpY-ih-tVB" eventType="touchUpInside" id="gvz-qL-zYN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="yRk-GI-SIl" secondAttribute="bottom" id="Aob-2K-sJR"/>
+                                    <constraint firstItem="yRk-GI-SIl" firstAttribute="leading" secondItem="tuy-Td-ekt" secondAttribute="leading" id="DIZ-nZ-qCZ"/>
+                                    <constraint firstAttribute="height" constant="114" id="JGx-mA-eFs"/>
+                                    <constraint firstItem="yRk-GI-SIl" firstAttribute="top" secondItem="tuy-Td-ekt" secondAttribute="top" id="WGv-BE-uDc"/>
+                                    <constraint firstAttribute="trailing" secondItem="yRk-GI-SIl" secondAttribute="trailing" id="mMV-U5-6Kn"/>
+                                    <constraint firstAttribute="width" constant="114" id="rd5-Af-xFa"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scientific name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cO-qX-zag">
+                                <rect key="frame" x="166" y="20" width="105" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TSH-99-qX4">
+                                <rect key="frame" x="166" y="42" width="404" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qpY-ih-tVB" id="p5x-rJ-YxR"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Common name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mrk-WO-Ck5">
+                                <rect key="frame" x="166" y="80" width="104" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uvz-o8-bb0">
+                                <rect key="frame" x="166" y="102" width="404" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qpY-ih-tVB" id="Fr7-hQ-r0n"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BC-vX-qV1">
+                                <rect key="frame" x="20" y="156" width="73" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="73" id="57P-de-Waq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k1r-lX-Bwc">
+                                <rect key="frame" x="131" y="150" width="439" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qpY-ih-tVB" id="vjj-GW-gtH"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ojm-Yq-nld">
+                                <rect key="frame" x="20" y="196" width="92" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="l8u-mQ-ttF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6kJ-9s-1R5">
+                                <rect key="frame" x="20" y="222" width="550" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="3ca-f7-cw2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qpY-ih-tVB" id="BFw-9P-AyG"/>
+                                </connections>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xyt-gJ-Jzz">
+                                <rect key="frame" x="20" y="366" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <state key="normal" title="Add Bird"/>
+                                <connections>
+                                    <action selector="onAddird:" destination="qpY-ih-tVB" eventType="touchUpInside" id="Oau-PK-5VF"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tuy-Td-ekt" firstAttribute="top" secondItem="HQg-QH-QoL" secondAttribute="bottom" constant="20" id="3de-52-7fc"/>
+                            <constraint firstItem="k1r-lX-Bwc" firstAttribute="centerY" secondItem="3BC-vX-qV1" secondAttribute="centerY" id="6H5-cZ-h2b"/>
+                            <constraint firstItem="6kJ-9s-1R5" firstAttribute="top" secondItem="Ojm-Yq-nld" secondAttribute="bottom" constant="8" id="6L6-kU-2r4"/>
+                            <constraint firstItem="Ojm-Yq-nld" firstAttribute="leading" secondItem="3BC-vX-qV1" secondAttribute="leading" id="8H5-xN-cwR"/>
+                            <constraint firstItem="3BC-vX-qV1" firstAttribute="top" secondItem="tuy-Td-ekt" secondAttribute="bottom" constant="22" id="8I7-eG-9I0"/>
+                            <constraint firstItem="TSH-99-qX4" firstAttribute="leading" secondItem="5cO-qX-zag" secondAttribute="leading" id="8V4-6B-K0u"/>
+                            <constraint firstAttribute="trailing" secondItem="Xyt-gJ-Jzz" secondAttribute="trailing" constant="20" id="AYq-6L-9Ok"/>
+                            <constraint firstItem="Xyt-gJ-Jzz" firstAttribute="top" secondItem="6kJ-9s-1R5" secondAttribute="bottom" constant="44" id="BJ3-JP-iRn"/>
+                            <constraint firstItem="uvz-o8-bb0" firstAttribute="leading" secondItem="Mrk-WO-Ck5" secondAttribute="leading" id="DyY-V1-UXY"/>
+                            <constraint firstItem="Mrk-WO-Ck5" firstAttribute="leading" secondItem="TSH-99-qX4" secondAttribute="leading" id="I0d-Dz-4PQ"/>
+                            <constraint firstItem="uvz-o8-bb0" firstAttribute="top" secondItem="Mrk-WO-Ck5" secondAttribute="bottom" constant="4" id="I6V-TQ-Bhp"/>
+                            <constraint firstItem="TSH-99-qX4" firstAttribute="top" secondItem="5cO-qX-zag" secondAttribute="bottom" constant="4" id="PXZ-Jd-wdZ"/>
+                            <constraint firstAttribute="trailing" secondItem="k1r-lX-Bwc" secondAttribute="trailing" constant="30" id="Sh9-h2-hlV"/>
+                            <constraint firstItem="3BC-vX-qV1" firstAttribute="leading" secondItem="7Eo-qd-N1F" secondAttribute="leading" constant="20" id="Tul-PV-zIZ"/>
+                            <constraint firstItem="5cO-qX-zag" firstAttribute="top" secondItem="HQg-QH-QoL" secondAttribute="bottom" constant="20" id="XRR-CC-JE0"/>
+                            <constraint firstItem="tuy-Td-ekt" firstAttribute="leading" secondItem="7Eo-qd-N1F" secondAttribute="leading" constant="20" id="Zbh-pE-1r6"/>
+                            <constraint firstAttribute="trailing" secondItem="TSH-99-qX4" secondAttribute="trailing" constant="30" id="bE8-GQ-bmN"/>
+                            <constraint firstItem="Xyt-gJ-Jzz" firstAttribute="leading" secondItem="7Eo-qd-N1F" secondAttribute="leading" constant="20" id="daI-02-Fxc"/>
+                            <constraint firstItem="Ojm-Yq-nld" firstAttribute="top" secondItem="3BC-vX-qV1" secondAttribute="bottom" constant="22" id="gFd-a8-dE9"/>
+                            <constraint firstItem="5cO-qX-zag" firstAttribute="leading" secondItem="tuy-Td-ekt" secondAttribute="trailing" constant="32" id="gZE-bN-uY4"/>
+                            <constraint firstAttribute="trailing" secondItem="6kJ-9s-1R5" secondAttribute="trailing" constant="30" id="hgD-q0-5D2"/>
+                            <constraint firstItem="6kJ-9s-1R5" firstAttribute="leading" secondItem="Ojm-Yq-nld" secondAttribute="leading" id="lJe-ms-SQu"/>
+                            <constraint firstAttribute="trailing" secondItem="uvz-o8-bb0" secondAttribute="trailing" constant="30" id="qdX-Az-2Hm"/>
+                            <constraint firstItem="k1r-lX-Bwc" firstAttribute="leading" secondItem="3BC-vX-qV1" secondAttribute="trailing" constant="38" id="vl2-7T-HML"/>
+                            <constraint firstItem="Mrk-WO-Ck5" firstAttribute="top" secondItem="TSH-99-qX4" secondAttribute="bottom" constant="8" id="vwH-b4-jWd"/>
+                        </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <connections>
+                        <outlet property="birdIV" destination="yRk-GI-SIl" id="cpL-j6-gGI"/>
+                        <outlet property="commentsTV" destination="6kJ-9s-1R5" id="LFI-6N-NjR"/>
+                        <outlet property="commonNameTF" destination="uvz-o8-bb0" id="lDf-hv-lVp"/>
+                        <outlet property="scientificNameTF" destination="TSH-99-qX4" id="nn9-UL-V2k"/>
+                        <outlet property="weatherTF" destination="k1r-lX-Bwc" id="aH2-3k-36H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hi3-pZ-2jC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1771" y="427"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Sight View Controller-->
         <scene sceneID="T2V-Ga-k0E">
             <objects>
-                <viewController id="ZMV-BZ-gbF" sceneMemberID="viewController">
+                <viewController id="ZMV-BZ-gbF" customClass="AddSightViewController" customModule="Birdy" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vKX-UG-vgf"/>
                         <viewControllerLayoutGuide type="bottom" id="8V8-p2-Uv5"/>

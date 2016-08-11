@@ -83,7 +83,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="T6s-9i-Pzk">
             <objects>
-                <viewController id="BOs-H1-gSW" customClass="SignInViewController" customModule="Birdy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignInVC" id="BOs-H1-gSW" customClass="SignInViewController" customModule="Birdy" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="b1q-6q-H4A"/>
                         <viewControllerLayoutGuide type="bottom" id="Y1Y-0l-wdo"/>

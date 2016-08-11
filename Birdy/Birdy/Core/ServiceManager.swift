@@ -182,13 +182,25 @@ class ServiceManager: NSObject {
     class func updateBird(birdId:String, vote:String, callback:((result:Bool,error:NSError?)->())?) {
         let encVote = vote.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
         let urlString = "\(baseUrl)/birds/updatebird/\(birdId)/\(encVote!)/\(loggedUser!.userId)"
-        LoadRequest(urlString, success: { (data) in
+        LoadRequest(urlString,uploadData: nil, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("vote res \(str)")
             if callback != nil { callback!(result: true,error: nil)}
 
         }) { (error) in
             if callback != nil { callback!(result: false,error: error)}
+        }
+    }
+
+    class func create(bird:Bird, callback:((success:Bool,error:NSError?)->())?) {
+        let urlString = "\(baseUrl)/birds/addbird"
+
+        LoadRequest(urlString, uploadData: bird.uploadData(), success: { (data) in
+
+            if callback != nil { callback!(success:true,error:nil) }
+
+        }) { (error) in
+            if callback != nil { callback!(success:false,error:error) }
         }
     }
 }
@@ -227,19 +239,23 @@ class Bird : NSObject {
     var longitude:Double! = 0.0
     var date:String! = ""
     var weather:String! = ""
-    var status:String! = ""
+    var status:String! = "unverified"
     var votes:[[AnyObject!]]! = []
     var seenbyuser:[String]! = []
     var owner:String! = ""
     var comments:String! = ""
 
+    override init() {
+        super.init()
+    }
+    
     init(dataDictionary:NSDictionary) {
         super.init()
-        self.birdId = dataDictionary["_id"] as? String ?? ""
-        self.image = dataDictionary["image"] as? String ?? ""
-        self.scientificname = dataDictionary["scientificname"] as? String ?? ""
-        self.commonname = dataDictionary["commonname"] as? String ?? ""
-        if let locArr = dataDictionary["location"] as? NSArray {
+        self.birdId = dataDictionary[BirdKey.Id.rawValue] as? String ?? ""
+        self.image = dataDictionary[BirdKey.Image.rawValue] as? String ?? ""
+        self.scientificname = dataDictionary[BirdKey.ScientificName.rawValue] as? String ?? ""
+        self.commonname = dataDictionary[BirdKey.CommonName.rawValue] as? String ?? ""
+        if let locArr = dataDictionary[BirdKey.Location.rawValue] as? NSArray {
             if let lat = locArr[0] as? Double {
                 self.latitude = lat
             }
@@ -248,13 +264,50 @@ class Bird : NSObject {
             }
         }
 
-        self.date = dataDictionary["date"] as? String ?? ""
-        self.weather = dataDictionary["weather"] as? String ?? ""
-        self.status = dataDictionary["status"] as? String ?? ""
-        self.votes = dataDictionary["votes"] as? [[AnyObject!]] ?? []
-        self.seenbyuser = dataDictionary["seenbyuser"] as? [String] ?? []
-        self.owner = dataDictionary["owner"] as? String ?? ""
-        self.comments = dataDictionary["comments"] as? String ?? ""
+        self.date = dataDictionary[BirdKey.Date.rawValue] as? String ?? ""
+        self.weather = dataDictionary[BirdKey.Weather.rawValue] as? String ?? ""
+        self.status = dataDictionary[BirdKey.Status.rawValue] as? String ?? ""
+        self.votes = dataDictionary[BirdKey.Votes.rawValue] as? [[AnyObject!]] ?? []
+        self.seenbyuser = dataDictionary[BirdKey.SeenByUser.rawValue] as? [String] ?? []
+        self.owner = dataDictionary[BirdKey.Owner.rawValue] as? String ?? ""
+        self.comments = dataDictionary[BirdKey.Comments.rawValue] as? String ?? ""
+    }
+
+    func uploadData()-> NSData? {
+        let dataDict = [BirdKey.Image.rawValue : self.image,
+                        BirdKey.CommonName.rawValue : self.commonname,
+                        BirdKey.ScientificName.rawValue : self.scientificname,
+                        BirdKey.Location.rawValue : [self.latitude,self.longitude],
+                        BirdKey.Date.rawValue : self.date,
+                        BirdKey.Weather.rawValue : self.weather,
+                        BirdKey.Owner.rawValue : self.owner,
+                        BirdKey.Comments.rawValue : self.comments,
+                        BirdKey.Status.rawValue : self.status
+                        ]
+
+        do {
+            let data = try NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted)
+            return data
+
+        } catch let error as NSError {
+            print("user pasre error \(error)")
+            return nil
+        }
+    }
+
+    enum BirdKey:String {
+        case Id = "_id"
+        case Image = "image"
+        case ScientificName = "scientificname"
+        case CommonName = "commonname"
+        case Location = "location"
+        case Date = "date"
+        case Weather = "weather"
+        case Status = "status"
+        case Votes = "votes"
+        case SeenByUser = "seenbyuser"
+        case Owner = "owner"
+        case Comments = "comments"
     }
 
 

@@ -53,10 +53,18 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         user.password = passwordTF.text
         user.email = emailTF.text
 
-        ServiceManager.registerNew(user) { (success, error) in
+        ServiceManager.registerNew(user) {[weak self] (success, error) in
             if success {
-                ServiceManager.getUserList()
-                StoryboardManager.initiateStoryboard("Main")
+
+                let loginVC = StoryboardManager.controllerFrom(storyboard: "Auth", withId: "SignInVC")
+                self?.navigationController?.pushViewController(loginVC!, animated: true)
+
+                var vcs = self?.navigationController?.viewControllers
+                vcs?.removeAtIndex((vcs?.count)! - 2)
+                self?.navigationController?.viewControllers = vcs!
+
+            } else {
+                AppUtils.showAlert(owner: self!, title: nil, message: (error?.localizedDescription)!, actions: nil)
             }
         }
 
