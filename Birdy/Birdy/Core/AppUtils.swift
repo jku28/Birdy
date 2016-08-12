@@ -63,7 +63,86 @@ class AppUtils: NSObject {
         navBar.setBackgroundImage(bg, forBarMetrics: UIBarMetrics.Default)
         navBar.shadowImage = AppUtils.resizeImage(withImage, toSize: CGSize(width: navBar.bounds.size.width, height: 1))
     }
-    
+
+    class func loadImage(imageUrl:String, callback:((image:UIImage?)->())) {
+        if (imageUrl.isEmpty) {
+            callback(image:nil)
+            return
+        }
+
+        let imageName = NSURL(string:imageUrl)?.lastPathComponent
+
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let filePath = paths.first?.stringByAppendingString(imageName!)
+
+
+        if NSFileManager.defaultManager().fileExistsAtPath(filePath!) && NSData(contentsOfFile: filePath!)?.length > 0 {
+            callback(image: UIImage(contentsOfFile: filePath!))
+        } else {
+            let urlStr = "\(baseUrl)/\(imageUrl)"
+            NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlStr)!, completionHandler: { (data, resp, error) in
+                if error == nil && (resp as! NSHTTPURLResponse).statusCode == 200{
+                    do {
+                        try data?.writeToFile(filePath!, options: NSDataWritingOptions.AtomicWrite)
+                    } catch let saveError {
+                        print("image save err \(saveError)")
+                    }
+                    callback(image: UIImage(data: data!))
+                } else {
+
+                }
+            }).resume()
+        }
+    }
+
+    class func loadImage(imageUrl:String, toImageView imageView:UIImageView) {
+        if (imageUrl.isEmpty) {
+            imageView.image = nil
+            return
+        }
+
+        let imageName = NSURL(string:imageUrl)?.lastPathComponent
+
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let filePath = paths.first?.stringByAppendingString(imageName!)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+
+            if NSFileManager.defaultManager().fileExistsAtPath(filePath!) && NSData(contentsOfFile: filePath!)?.length > 0 {
+                dispatch_async(dispatch_get_main_queue(), {
+                    imageView.image = UIImage(contentsOfFile: filePath!)
+                })
+            } else {
+
+                let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+                spinner.color = UIColor.darkGrayColor()
+                spinner.hidesWhenStopped = true
+                imageView.addSubview(spinner)
+                spinner.center = CGPoint(x: imageView.bounds.width/2, y: imageView.bounds.height/2)
+                spinner.stopAnimating()
+
+
+                let urlStr = "\(baseUrl)/\(imageUrl)"
+                NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlStr)!, completionHandler: { (data, resp, error) in
+                    if error == nil && (resp as! NSHTTPURLResponse).statusCode == 200{
+                        do {
+                            try data?.writeToFile(filePath!, options: NSDataWritingOptions.AtomicWrite)
+                        } catch let saveError {
+                            print("image save err \(saveError)")
+                        }
+                        dispatch_async(dispatch_get_main_queue(), {
+                            spinner.removeFromSuperview()
+                            imageView.image = UIImage(data: data!)
+                        })
+                    } else {
+                        spinner.removeFromSuperview()
+                        imageView.image = nil
+                    }
+                }).resume()
+            }
+        })
+
+    }
+
     private class func resizeImage(image:UIImage, toSize:CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(toSize, false, 0.0);
         image.drawInRect(CGRect(x: 0, y: 0, width: toSize.width, height: toSize.height))

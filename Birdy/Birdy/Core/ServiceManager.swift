@@ -243,13 +243,63 @@ private func LoadRequest(urlString:String, method:String?, uploadData:AnyObject?
     }
 }
 
-func uploadImage(uploadData:NSData, callback:((success:Bool,error:NSError?)->())?) {
-    let encodedStr = "\(baseUrl)/photos/upload"
+private func LoadRequestJSON(urlString:String, method:String?, uploadData:AnyObject?,success:((NSData?)->())?,fail:((NSError?)->())?) {
+    let encodedStr = urlString
+    let alaMethod = (method == nil) ? Method.GET : Method(rawValue:method!)
 
-    Alamofire.upload(.POST, encodedStr, data: uploadData).responseData { (resp) in
-
+    if uploadData != nil {
+        Alamofire.request(.POST, encodedStr, parameters: uploadData as? [String:AnyObject], encoding: .JSON, headers: ["Content-Type":"application/json"]).responseJSON(completionHandler: { (resp) in
+            if resp.result.error == nil {
+                if success != nil { success!(resp.data!) }
+            } else {
+                if fail != nil { fail!(resp.result.error!) }
+            }
+        })
+    } else {
+        Alamofire.request(alaMethod!, encodedStr).responseJSON(completionHandler: { (resp) in
+            if resp.result.error == nil {
+                if success != nil { success!(resp.data!) }
+            } else {
+                if fail != nil { fail!(resp.result.error!) }
+            }
+        })
     }
+}
 
+func uploadImage(uploadData:NSData, success:((NSData?)->())?,fail:((NSError?)->())?) {
+    let encodedStr = "\(baseUrl)/photos/file"
+
+    let parameters = [
+        "file": "image.png"]
+
+    let URL = encodedStr
+
+    Alamofire.upload(.POST, URL, multipartFormData: {
+        multipartFormData in
+
+        multipartFormData.appendBodyPart(data: uploadData, name: "file", fileName: "image.png", mimeType: "image/png")
+
+
+        for (key, value) in parameters {
+            multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key)
+        }
+
+        }, encodingCompletion: {
+            encodingResult in
+            switch encodingResult {
+            case .Success(let upload, _, _):
+                upload.responseData(completionHandler: { (resp) in
+                    if resp.result.error == nil {
+                        if success != nil { success!(resp.data!) }
+                    } else {
+                        if fail != nil { fail!(resp.result.error!) }
+                    }
+                })
+            case .Failure(let encodingError as NSError):
+                if fail != nil { fail!(encodingError ) }
+            default:break
+            }
+    })
 
 }
 

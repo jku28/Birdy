@@ -39,7 +39,7 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     internal func loadSights() {
         self.startAnimateWait()
-        ServiceManager.getAllBirds {[weak self] (birds, error) in
+        ServiceManager.getBirdsList {[weak self] (birds, error) in
 
             self?.sortBirds(birds)
 

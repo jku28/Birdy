@@ -52,12 +52,11 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
 
     @IBAction func onAddird(sender: UIButton) {
 
+
         scientificNameTF.resignFirstResponder()
         commonNameTF.resignFirstResponder()
         weatherTF.resignFirstResponder()
         commentsTV.resignFirstResponder()
-
-        let newBird = Bird()
 
         guard !(commonNameTF.text!.isEmpty) else {
             AppUtils.showAlert(owner: self, title: nil, message: "You should specify Scientific name", actions: nil)
@@ -71,13 +70,41 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
             return
         }
 
+        self.startAnimateWait()
 
         if birdIV.image != nil {
-            let imageData = UIImageJPEGRepresentation(birdIV.image!, 0.001)
-            let imageBase64Str = imageData?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
-            newBird.image = imageBase64Str
+
+            uploadImage(UIImagePNGRepresentation(birdIV.image!)!, success: { (data) in
+                print("resp data \(NSString(data: data!, encoding: NSUTF8StringEncoding))")
+
+                do {
+                    let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
+                    guard let dataDict :NSDictionary = JSON as? NSDictionary else {
+                        self.saveBirdData(nil)
+                        return
+                    }
+                    if let uri = dataDict["data"] as? String {
+                        self.saveBirdData(uri)
+                    }
+                } catch let error {
+                    print("parse error \(error)")
+                    self.stopAnimateWait()
+                }
+            }) { (error) in
+                print("resp error \(error)")
+                self.stopAnimateWait()
+                
+            }
+        }else {
+            saveBirdData(nil)
         }
 
+    }
+
+    private func saveBirdData(imageUrl:String?) {
+        let newBird = Bird()
+
+        newBird.image = imageUrl ?? ""
         newBird.scientificname = scientificNameTF.text ?? ""
         newBird.commonname = commonNameTF.text
         newBird.weather = weatherTF.text
@@ -91,7 +118,7 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
         newBird.longitude = 0
 
         startAnimateWait()
-        
+
         ServiceManager.create(newBird) {[weak self] (success, error) in
             self?.stopAnimateWait()
 
@@ -101,14 +128,11 @@ class AddBirdViewController: UIViewController_ImagePicker, UITextFieldDelegate, 
                 AppUtils.showAlert(owner: self!, title: nil, message: "Fail to save Bird", actions: nil)
             }
         }
+
     }
 
     override func didPickImagePickerImage(image: UIImage) {
         birdIV.image = image
-
-        uploadImage(UIImageJPEGRepresentation(image, 0.01)!) { (success, error) in
-
-        }
     }
 
     //MARK: - UITextFieldDelegate

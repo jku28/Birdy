@@ -21,16 +21,19 @@ class BirdCell: BaseTableCell {
         object.cell = self
 
         birdIV.roundCorners(.AllCorners, radius: 5)
+        birdIV.layer.borderColor = UIColor.lightGrayColor().CGColor
+        birdIV.layer.borderWidth = 1
 
         if let obj = object as? BirdCellObject {
             birdNameL.text = obj.bird.commonname
             scientNameL.text = obj.bird.scientificname
             weatherL.text = obj.bird.weather
             commentsL.text = obj.bird.comments
+
+            AppUtils.loadImage(obj.bird.image, toImageView: self.birdIV)
         }
     }
 }
-
 
 class BirdCellObject: BaseTableCellObject {
     var bird:Bird!
