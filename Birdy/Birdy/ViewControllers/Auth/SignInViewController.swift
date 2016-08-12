@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignInViewController: UIViewController {
+class SignInViewController: UIViewController, UITextFieldDelegate {
 
     //MARK: - outlets
 
@@ -56,4 +56,12 @@ class SignInViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
 
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == usernameTF {
+            passwordTF.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
 }

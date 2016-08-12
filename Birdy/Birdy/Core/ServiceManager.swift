@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import Alamofire
 
 let baseUrl = "https://jk208.host.cs.st-andrews.ac.uk/birdwatch"
 
@@ -21,7 +22,7 @@ class ServiceManager: NSObject {
 
     class func login(login:String, password:String,callback:((success:Bool,error:NSError?)->())?) {
         let urlString = "\(baseUrl)/users/login/\(login)/\(password)"
-        LoadRequest(urlString, uploadData:nil, success: { (data) in
+        LoadRequest(urlString, method: nil, uploadData:nil, success: { (data) in
             if let str = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
                 if str.containsString("403") {
                     if callback != nil { callback!(success:false,error:NSError(domain: "in-app", code: 10001, userInfo: [NSLocalizedDescriptionKey : "Forbidden (403)"]))}
@@ -58,7 +59,7 @@ class ServiceManager: NSObject {
     class func registerNew(user:User, callback:((success:Bool,error:NSError?)->())?) {
         let urlString = "\(baseUrl)/users/adduser"
 
-        LoadRequest(urlString, uploadData: user.uploadData(), success: { (data) in
+        LoadRequest(urlString, method: nil, uploadData: user.uploadData(), success: { (data) in
 
             loggedUser = user
 
@@ -72,7 +73,7 @@ class ServiceManager: NSObject {
     class func getUserList() {
         let urlString = "\(baseUrl)/users/userlist"
 
-        LoadRequest(urlString, uploadData:nil, success: { (data) in
+        LoadRequest(urlString, method: nil, uploadData:nil, success: { (data) in
             users = []
             print("users \(NSString(data: data!, encoding: NSUTF8StringEncoding))")
             do {
@@ -95,7 +96,7 @@ class ServiceManager: NSObject {
     class func updatePassword (newPassword:String, callback:((success:Bool,error:NSError?)->())?) {
         ///changepassword/:username/:password
         let urlString = "\(baseUrl)/users/changepassword/\(loggedUser!.userId)/\(newPassword)"
-        LoadRequest(urlString, uploadData:nil, success: { (data) in
+        LoadRequest(urlString, method: nil, uploadData:nil, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("pass updated \(str)")
             if callback != nil { callback!(success:true,error:nil) }
@@ -109,7 +110,7 @@ class ServiceManager: NSObject {
     class func getAllBirds(callback:(([Bird],NSError?)->())?) {
         let urlString = "\(baseUrl)/birds/birdlist"
 
-        LoadRequest(urlString, uploadData:nil, success: { (data) in
+        LoadRequest(urlString, method: nil, uploadData:nil, success: { (data) in
             var birds:[Bird] = []
             print("got birds \(NSString(data: data!, encoding: NSUTF8StringEncoding))")
             do {
@@ -134,7 +135,7 @@ class ServiceManager: NSObject {
     class func getBirdsList(callback:(([Bird],NSError?)->())?) {
         let urlString = "\(baseUrl)/birds/birdlist/\(loggedUser!.userId)"
 
-        LoadRequest(urlString, uploadData:nil, success: { (data) in
+        LoadRequest(urlString, method: nil, uploadData:nil, success: { (data) in
             var birds:[Bird] = []
             print("got birds \(NSString(data: data!, encoding: NSUTF8StringEncoding))")
             do {
@@ -161,7 +162,7 @@ class ServiceManager: NSObject {
         print(loggedUser!.userId)
         print(loggedUser!.userName)
 
-        LoadRequest(urlString, uploadData:nil, success: { (data) in
+        LoadRequest(urlString, method: nil, uploadData:nil, success: { (data) in
             do {
                 let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
                 guard let birdsArray :NSArray = JSON as? NSArray else {
@@ -182,7 +183,7 @@ class ServiceManager: NSObject {
     class func updateBird(birdId:String, vote:String, callback:((result:Bool,error:NSError?)->())?) {
         let encVote = vote.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
         let urlString = "\(baseUrl)/birds/updatebird/\(birdId)/\(encVote!)/\(loggedUser!.userId)"
-        LoadRequest(urlString,uploadData: nil, success: { (data) in
+        LoadRequest(urlString, method: nil,uploadData: nil, success: { (data) in
             let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("vote res \(str)")
             if callback != nil { callback!(result: true,error: nil)}
@@ -195,7 +196,19 @@ class ServiceManager: NSObject {
     class func create(bird:Bird, callback:((success:Bool,error:NSError?)->())?) {
         let urlString = "\(baseUrl)/birds/addbird"
 
-        LoadRequest(urlString, uploadData: bird.uploadData(), success: { (data) in
+        LoadRequest(urlString, method: nil, uploadData: bird.uploadData(), success: { (data) in
+
+            if callback != nil { callback!(success:true,error:nil) }
+
+        }) { (error) in
+            if callback != nil { callback!(success:false,error:error) }
+        }
+    }
+
+    class func delete(birdId:String, callback:((success:Bool,error:NSError?)->())?) {
+        let urlString = "\(baseUrl)/birds/deletebird/\(birdId)"
+
+        LoadRequest(urlString, method: "DELETE", uploadData: nil, success: { (data) in
 
             if callback != nil { callback!(success:true,error:nil) }
 
@@ -207,47 +220,78 @@ class ServiceManager: NSObject {
 
 //MARK: - Global
 
-private func LoadRequest(urlString:String, uploadData:NSData?,success:((NSData?)->())?,fail:((NSError?)->())?) {
+private func LoadRequest(urlString:String, method:String?, uploadData:AnyObject?,success:((NSData?)->())?,fail:((NSError?)->())?) {
     let encodedStr = urlString//.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) as! String
-    let request = NSMutableURLRequest(URL: NSURL(string: encodedStr)!)
-    if uploadData != nil {
-        request.HTTPMethod = "POST"
-        request.HTTPBody = uploadData!
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+    var alaMethod = Method.GET
+    if method == "POST" {
+        alaMethod = Method.POST
+    } else if method == "DELETE" {
+        alaMethod = Method.DELETE
     }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
-            dispatch_async(dispatch_get_main_queue(), {
-                if error == nil {
-                    if success != nil { success!(data!) }
-                } else {
-                    if fail != nil { fail!(error!) }
-                }
-            })
-            }.resume()
-    })
+
+    if uploadData != nil {
+        Alamofire.request(.POST, encodedStr, parameters: uploadData as? [String:AnyObject], encoding: .JSON, headers: ["Content-Type":"application/json"]).responseData(completionHandler: { (resp) in
+            if resp.result.error == nil {
+                if success != nil { success!(resp.data!) }
+            } else {
+                if fail != nil { fail!(resp.result.error!) }
+            }
+        })
+    } else {
+        Alamofire.request(alaMethod, encodedStr).responseData { (resp) in
+            if resp.result.error == nil {
+                if success != nil { success!(resp.data!) }
+            } else {
+                if fail != nil { fail!(resp.result.error!) }
+            }
+        }
+    }
+
+
 }
 
 func uploadImage(uploadData:NSData, callback:((success:Bool,error:NSError?)->())?) {
-    let encodedStr = "\(baseUrl)/upload"
-    let request = NSMutableURLRequest(URL: NSURL(string: encodedStr)!)
-    request.HTTPMethod = "POST"
-    request.HTTPBody = uploadData
-    request.addValue("image/jpeg", forHTTPHeaderField: "Content-Type")
-    request.addValue("file", forHTTPHeaderField: "name")
+    let encodedStr = "\(baseUrl)/photos/upload"
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
-            print("data \(data)")
-            dispatch_async(dispatch_get_main_queue(), {
-                if error == nil {
-                    if callback != nil { callback!(success: true,error: nil) }
-                } else {
-                    if callback != nil { callback!(success: false,error: error) }
-                }
-            })
-            }.resume()
-    })
+    Alamofire.upload(.POST, encodedStr, data: uploadData).responseData { (resp) in
+
+    }
+
+
+}
+
+private func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData, boundary: String) -> NSData {
+    let body = NSMutableData();
+
+    if parameters != nil {
+        for (key, value) in parameters! {
+            body.appendString("--\(boundary)\r\n")
+            body.appendString("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+            body.appendString("\(value)\r\n")
+        }
+    }
+
+    let filename = "user-profile.png"
+
+    let mimetype = "image/png"
+
+    body.appendString("--\(boundary)\r\n")
+    body.appendString("Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n")
+    body.appendString("Content-Type: \(mimetype)\r\n\r\n")
+    body.appendData(imageDataKey)
+    body.appendString("\r\n")
+
+
+
+    body.appendString("--\(boundary)--\r\n")
+    
+    return body
+}
+
+
+private func generateBoundaryString() -> String {
+    return "Boundary-\(NSUUID().UUIDString)"
 }
 
 //MARK: - Additional classes
@@ -295,7 +339,7 @@ class Bird : NSObject {
         self.comments = dataDictionary[BirdKey.Comments.rawValue] as? String ?? ""
     }
 
-    func uploadData()-> NSData? {
+    func uploadData()-> AnyObject? {
         let dataDict = [BirdKey.Image.rawValue : self.image,
                         BirdKey.CommonName.rawValue : self.commonname,
                         BirdKey.ScientificName.rawValue : self.scientificname,
@@ -309,14 +353,15 @@ class Bird : NSObject {
                         BirdKey.Votes.rawValue : self.votes
                         ]
 
-        do {
-            let data = try NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted)
-            return data
-
-        } catch let error as NSError {
-            print("user pasre error \(error)")
-            return nil
-        }
+//        do {
+//            let data = try NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted)
+//            return data
+//
+//        } catch let error as NSError {
+//            print("user pasre error \(error)")
+//            return nil
+//        }
+        return dataDict
     }
 
     enum BirdKey:String {
@@ -357,20 +402,21 @@ class User:NSObject {
         self.password = dataDictionary[UserKey.Password.rawValue] as? String ?? ""
     }
 
-    func uploadData()-> NSData? {
+    func uploadData()-> AnyObject? {
         let dataDict = [UserKey.UserName.rawValue : self.userName,
                         UserKey.FullName.rawValue : self.fullName,
                         UserKey.Email.rawValue : self.email,
                         UserKey.Password.rawValue : self.password]
 
-        do {
-        let data = try NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted)
-            return data
-
-        } catch let error as NSError {
-            print("user pasre error \(error)")
-            return nil
-        }
+//        do {
+//        let data = try NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted)
+//            return data
+//
+//        } catch let error as NSError {
+//            print("user pasre error \(error)")
+//            return nil
+//        }
+        return dataDict
     }
 
     enum UserKey:String {
@@ -379,5 +425,13 @@ class User:NSObject {
         case FullName = "fullname"
         case Email = "email"
         case Password = "password"
+    }
+}
+
+extension NSMutableData {
+
+    func appendString(string: String) {
+        let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        appendData(data!)
     }
 }

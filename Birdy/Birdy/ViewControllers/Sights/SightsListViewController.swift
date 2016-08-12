@@ -17,7 +17,7 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
     //MARK: - vars
 
     private var presentingSights:[BirdsDateGroupObject] = []
-
+    private var tableRefresh:UIRefreshControl = UIRefreshControl()
     //MARK: - funcs
 
     override func viewDidLoad() {
@@ -28,19 +28,23 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.registerNib(UINib(nibName: BirdsDateGroupCell.stringName(), bundle: nil), forCellReuseIdentifier: BirdsDateGroupCell.stringName())
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 360.0
+
+        tableRefresh.addTarget(self, action: #selector(loadSights), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(tableRefresh)
     }
 
     override func viewWillAppear(animated: Bool) {
         loadSights()
     }
 
-    private func loadSights() {
+    internal func loadSights() {
         self.startAnimateWait()
         ServiceManager.getAllBirds {[weak self] (birds, error) in
 
             self?.sortBirds(birds)
 
             self?.stopAnimateWait()
+            self?.tableRefresh.endRefreshing()
             if (error != nil) { print("error \(error)") }
         }
     }
@@ -70,9 +74,12 @@ class SightsListViewController: UIViewController, UITableViewDelegate, UITableVi
 
         presentingSights.removeAll()
 
+        let res = groupped.sort {
+            return $0.0 < $1.0
+        }
 
-        for key in groupped.keys {
-            presentingSights.append(BirdsDateGroupObject(birds: groupped[key]!))
+        for (_,val) in res {
+            presentingSights.append(BirdsDateGroupObject(birds: val))
         }
 
         tableView.reloadData()

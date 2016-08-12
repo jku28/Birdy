@@ -240,6 +240,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="E9R-yL-9c7" id="n4u-YZ-lKW"/>
+                                    <outlet property="delegate" destination="E9R-yL-9c7" id="K0W-KV-ARe"/>
                                 </connections>
                             </tableView>
                         </subviews>

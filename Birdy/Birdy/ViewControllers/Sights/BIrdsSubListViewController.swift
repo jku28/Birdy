@@ -48,14 +48,30 @@ class BirdsSubListViewController: UIViewController, UITableViewDelegate, UITable
 
         let cell = tableView.dequeueReusableCellWithIdentifier(object.cellClass.stringName()) as! BaseTableCell
         cell.selectionStyle = .None
-
+        cell.editing = true
         cell.setup(fromObject: object)
 
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let action = UITableViewRowAction(style: UITableViewRowActionStyle.Destructive, title: "DELETE") {[weak self] (action, path) in
+            let birdObj = self?.presentingBirdObjects[indexPath.row]
+            self?.startAnimateWait()
+
+            ServiceManager.delete(birdObj!.bird.birdId, callback: { (success, error) in
+                if success {
+                    self?.tableView.beginUpdates()
+                    self?.presentingBirdObjects.removeAtIndex(indexPath.row)
+                    self?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    self?.tableView.endUpdates()
+                }
+                self?.stopAnimateWait()
+            })
+        }
+
+        return [action]
     }
 
 }
