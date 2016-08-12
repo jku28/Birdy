@@ -221,14 +221,8 @@ class ServiceManager: NSObject {
 //MARK: - Global
 
 private func LoadRequest(urlString:String, method:String?, uploadData:AnyObject?,success:((NSData?)->())?,fail:((NSError?)->())?) {
-    let encodedStr = urlString//.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) as! String
-
-    var alaMethod = Method.GET
-    if method == "POST" {
-        alaMethod = Method.POST
-    } else if method == "DELETE" {
-        alaMethod = Method.DELETE
-    }
+    let encodedStr = urlString
+    let alaMethod = (method == nil) ? Method.GET : Method(rawValue:method!)
 
     if uploadData != nil {
         Alamofire.request(.POST, encodedStr, parameters: uploadData as? [String:AnyObject], encoding: .JSON, headers: ["Content-Type":"application/json"]).responseData(completionHandler: { (resp) in
@@ -239,7 +233,7 @@ private func LoadRequest(urlString:String, method:String?, uploadData:AnyObject?
             }
         })
     } else {
-        Alamofire.request(alaMethod, encodedStr).responseData { (resp) in
+        Alamofire.request(alaMethod!, encodedStr).responseData { (resp) in
             if resp.result.error == nil {
                 if success != nil { success!(resp.data!) }
             } else {
@@ -247,8 +241,6 @@ private func LoadRequest(urlString:String, method:String?, uploadData:AnyObject?
             }
         }
     }
-
-
 }
 
 func uploadImage(uploadData:NSData, callback:((success:Bool,error:NSError?)->())?) {
@@ -259,39 +251,6 @@ func uploadImage(uploadData:NSData, callback:((success:Bool,error:NSError?)->())
     }
 
 
-}
-
-private func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData, boundary: String) -> NSData {
-    let body = NSMutableData();
-
-    if parameters != nil {
-        for (key, value) in parameters! {
-            body.appendString("--\(boundary)\r\n")
-            body.appendString("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
-            body.appendString("\(value)\r\n")
-        }
-    }
-
-    let filename = "user-profile.png"
-
-    let mimetype = "image/png"
-
-    body.appendString("--\(boundary)\r\n")
-    body.appendString("Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n")
-    body.appendString("Content-Type: \(mimetype)\r\n\r\n")
-    body.appendData(imageDataKey)
-    body.appendString("\r\n")
-
-
-
-    body.appendString("--\(boundary)--\r\n")
-    
-    return body
-}
-
-
-private func generateBoundaryString() -> String {
-    return "Boundary-\(NSUUID().UUIDString)"
 }
 
 //MARK: - Additional classes
@@ -352,15 +311,6 @@ class Bird : NSObject {
                         BirdKey.Status.rawValue : self.status,
                         BirdKey.Votes.rawValue : self.votes
                         ]
-
-//        do {
-//            let data = try NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted)
-//            return data
-//
-//        } catch let error as NSError {
-//            print("user pasre error \(error)")
-//            return nil
-//        }
         return dataDict
     }
 
@@ -407,15 +357,6 @@ class User:NSObject {
                         UserKey.FullName.rawValue : self.fullName,
                         UserKey.Email.rawValue : self.email,
                         UserKey.Password.rawValue : self.password]
-
-//        do {
-//        let data = try NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted)
-//            return data
-//
-//        } catch let error as NSError {
-//            print("user pasre error \(error)")
-//            return nil
-//        }
         return dataDict
     }
 
