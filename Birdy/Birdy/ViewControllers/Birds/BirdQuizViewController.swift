@@ -27,6 +27,10 @@ class BirdQuizViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         // Do any additional setup after loading the view.
 
         navigationItem.title = "Bird Quiz"
+
+        birdIV.roundCorners(.AllCorners, radius: 5)
+        birdIV.layer.borderColor = UIColor.lightGrayColor().CGColor
+        birdIV.layer.borderWidth = 1
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -39,7 +43,8 @@ class BirdQuizViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 self?.bird = bird
                 self?.namePicker.reloadAllComponents()
                 //setup data
-                self?.birdIV.image = UIImage(data: NSData(base64EncodedString: bird!.image, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)
+                AppUtils.loadImage(bird!.image, toImageView: self!.birdIV)
+
             } else {
                 AppUtils.showAlert(owner: self, title: nil, message: (error?.localizedDescription)!, actions: nil)
             }
